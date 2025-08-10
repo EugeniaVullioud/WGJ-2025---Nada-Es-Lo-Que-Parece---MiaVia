@@ -16,7 +16,7 @@ public class MovingFadingObject : MonoBehaviour
 
     private float _maxScaleMultiplier = 1f;
     private float _growthStartPercent = 0.7f;
-    private Vector3 _initialScale;
+    [SerializeField]private Vector3 _initialScale;
 
     public MovingFadingObject PrefabReference { get; private set; }
 
@@ -24,6 +24,8 @@ public class MovingFadingObject : MonoBehaviour
     {
         PrefabReference = prefab;
     }
+    [HideInInspector]
+    public int poolIndex;
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
@@ -71,8 +73,8 @@ public class MovingFadingObject : MonoBehaviour
         else if (_elapsedTime > _travelTime - _fadeDuration)
         {
             // Fade out
-            float fadeOutTime = _elapsedTime - (_travelTime - _fadeDuration);
-            c.a = Mathf.Lerp(_startColor.a, 0f, fadeOutTime / _fadeDuration);
+            //float fadeOutTime = _elapsedTime - (_travelTime - _fadeDuration);
+            //c.a = Mathf.Lerp(_startColor.a, 0f, fadeOutTime / _fadeDuration);
         }
         else
         {
@@ -95,7 +97,7 @@ public class MovingFadingObject : MonoBehaviour
     }
     public void ResetObject()
     {
-        transform.localScale = Vector3.one;
+        transform.localScale = _initialScale;
     }
 }
 

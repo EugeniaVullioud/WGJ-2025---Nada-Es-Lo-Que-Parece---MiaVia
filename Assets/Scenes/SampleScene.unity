@@ -10108,13 +10108,13 @@ MonoBehaviour:
   spawnInterval: 0.7
   spawnDistance: 500
   exitDistance: -10
-  fixedSpeed: 80
+  fixedSpeed: 70
   heightOffsetX: 30
-  tiltAngle: -40
+  tiltAngle: -30
   tiltAnglex: 90
   tiltAngley: 180
-  startDistanceFromCenter: 30
-  endDistanceFromCenter: 100
+  startDistanceFromCenter: 35
+  endDistanceFromCenter: 120
   growthScale: 2
   growthStartPercent: 0.2
 --- !u!1 &1377309551
@@ -11686,7 +11686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1556743147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11700,27 +11700,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnablePrefabs:
-  - prefab: {fileID: 466637919027029892, guid: 9bab726c4a6f42a4993995067f017a9d, type: 3}
+  - prefab: {fileID: 3745045935822022651, guid: 9e8e380845452484a9f02fbb092b713b, type: 3}
     isFunctional: 0
-  - prefab: {fileID: 466637919027029892, guid: 697e220d3ca91564d8357f8d2cf23fa8, type: 3}
+  - prefab: {fileID: 5569477348583227876, guid: d44dc75c254a514439c59627a63b3ff6, type: 3}
+    isFunctional: 0
+  - prefab: {fileID: 7518716724574528753, guid: b0082db9070c2724083c0ab682004c96, type: 3}
     isFunctional: 0
   spawnableFunctionalPrefabs:
   - prefab: {fileID: 466637919027029892, guid: a9965a473985e5d4db5d5c86874bb350, type: 3}
     isFunctional: 1
   - prefab: {fileID: 466637919027029892, guid: 0a0d7a2dbad5a2249b20a0ad54a00006, type: 3}
     isFunctional: 1
-  poolSizePerPrefab: 10
-  decorativeSpawnInterval: 0.5
+  poolSizePerPrefab: 5
+  decorativeSpawnInterval: 2
   functionalMinSpacing: 15
   functionalLaneBlockTime: 2
-  spawnDistance: 50
+  spawnDistance: 500
   exitDistance: -5
-  minSpeed: 8
-  maxSpeed: 12
-  startDistanceFromCenter: 10
-  endDistanceFromCenter: 40
-  heightOffsetX: -10
-  tiltAngle: 3
+  fixedSpeed: 60
+  startDistanceFromCenter: 5
+  endDistanceFromCenter: 60
+  heightOffsetX: 30
+  tiltAngle: -40
+  tiltAnglex: 90
+  tiltAngley: 180
   growthScale: 1.5
   growthStartPercent: 0.7
   functionalMinTimeSpacing: 2

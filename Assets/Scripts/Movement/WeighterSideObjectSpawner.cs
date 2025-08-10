@@ -25,12 +25,13 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
     public float spawnDistance = 50f;
     public float exitDistance = -5f;
-    public float minSpeed = 8f;
-    public float maxSpeed = 12f;
+    public float fixedSpeed = 8f;
     public float startDistanceFromCenter = 10f;
     public float endDistanceFromCenter = 40f;
     public float heightOffsetX = -10f;
     public float tiltAngle = 3f;
+    public float tiltAnglex = 90f;          // Tilt per lane
+    public float tiltAngley = 180f;          // Tilt per lane
     public float growthScale = 1.5f;
     [Range(0f, 1f)] public float growthStartPercent = 0.7f;
 
@@ -288,15 +289,14 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
         Vector3 endPos = new Vector3(endX, endY, endZ);
 
-        float speed = Random.Range(minSpeed, maxSpeed);
-        float travelTime = Vector3.Distance(startPos, endPos) / speed;
+        float travelTime = Vector3.Distance(startPos, endPos) / fixedSpeed;
 
         var obj = _pools[chosen.prefab].Get();
         obj.InitMovement(startPos, endPos, travelTime, o => ReturnToPool(chosen.prefab, o), growthScale, growthStartPercent);
 
         // Apply tilt
         float appliedTilt = laneSide > 0 ? -tiltAngle : tiltAngle;
-        obj.transform.rotation = Quaternion.Euler(-90, 0f, appliedTilt);
+        obj.transform.rotation = Quaternion.Euler(tiltAnglex, tiltAngley, -appliedTilt);
     }
 
     private void ReturnToPool(MovingFadingObject prefab, MovingFadingObject obj)

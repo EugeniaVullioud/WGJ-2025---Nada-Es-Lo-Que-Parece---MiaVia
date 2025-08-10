@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolManager
 {
+ /*   
     // Dictionary to hold pools for each struct type
     private readonly Dictionary<Type, object> pools = new Dictionary<Type, object>();
 
@@ -32,6 +33,23 @@ public class PoolManager
                 genericPool.Clear();
             }
         }
+        pools.Clear();
+    }
+ */
+    private readonly Dictionary<Type, object> pools = new Dictionary<Type, object>();
+
+    public EventPool<T> GetPool<T>(int initialCount = 20) where T : struct
+    {
+        var type = typeof(T);
+        if (!pools.ContainsKey(type))
+            pools[type] = new EventPool<T>(initialCount);
+
+        return (EventPool<T>)pools[type];
+    }
+
+
+    public void ClearAllPools()
+    {
         pools.Clear();
     }
 }

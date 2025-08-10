@@ -1,47 +1,55 @@
 using UnityEngine;
 
-#region Difficulty Settings
+public interface IEventDataSetter<T>
+{
+    void Set(T data);
+}
 
+#region Difficulty Settings
 [System.Serializable]
-public struct DifficultyChosen
+public struct DifficultyChosen : IEventDataSetter<DifficultyTypes>
 {
     public DifficultyTypes Difficulty;
+
     public DifficultyChosen(DifficultyTypes difficulty) => this.Difficulty = difficulty;
 
+    public void Set(DifficultyTypes difficulty) => this.Difficulty = difficulty;
 }
 #endregion
 
 
-
 #region Progress Bars
-
 [System.Serializable]
-public struct ModifyShameStat
+public struct ModifyShameStat : IEventDataSetter<float>
 {
     public float Amount;
 
-    public ModifyShameStat(float amount)
-    {
-        this.Amount = amount;
-    }
+    public ModifyShameStat(float amount) => this.Amount = amount;
+
+    public void Set(float amount) => this.Amount = amount;
 }
 
 [System.Serializable]
-public struct ModifyDecisionTimeStat
+public struct ModifyDecisionTimeStat : IEventDataSetter<float>
 {
     public float Amount;
     public ModifyDecisionTimeStat(float amount) => this.Amount = amount;
 
+    public void Set(float amount) => this.Amount = amount;
 }
 
 [System.Serializable]
-public struct ModifyDistanceTimeStat
+public struct ModifyDistanceTimeStat : IEventDataSetter<float>
 {
     public float Amount;
     public ModifyDistanceTimeStat(float amount) => this.Amount = amount;
 
+    public void Set(float amount) => this.Amount = amount;
 }
+
+public struct MaxShameReached { }
 #endregion
+
 
 #region Game States
 [System.Serializable]
@@ -49,19 +57,95 @@ public struct EnterDecisionMakingState { }
 
 [System.Serializable]
 public struct ExitDecisionMakingState { }
-
 #endregion
 
 
 #region Decisions
-
 [System.Serializable]
-public struct SetNextDecision 
+public struct SetNextDecision : IEventDataSetter<DecisionData>
 {
     public DecisionData NextDecision;
 
     public SetNextDecision(DecisionData next) => this.NextDecision = next;
+
+    public void Set(DecisionData next) => this.NextDecision = next;
 }
 
-public struct TriggerNextDecision{ }
+[System.Serializable]
+public struct TriggerNextDecision { }
+#endregion
+
+
+#region Menu
+[System.Serializable]
+public struct MenuChosen : IEventDataSetter<MenuType>
+{
+    public MenuType Menu;
+    public MenuChosen(MenuType menu) => this.Menu = menu;
+
+    public void Set(MenuType menu) => this.Menu = menu;
+}
+#endregion
+
+
+#region Game Management
+[System.Serializable]
+public struct ExitGame{ }  
+public struct LostGame { }
+public struct ResetGame { }
+public struct PlayAgain { }
+#endregion
+
+
+#region Visuals
+[System.Serializable]
+public struct VisualsReady: IEventDataSetter<bool>
+{
+    public bool Ready;
+    public VisualsReady(bool ready) => this.Ready = ready;
+
+    public void Set(bool ready) => this.Ready = ready;
+}
+#endregion
+
+
+#region Audio
+[System.Serializable]
+public struct PlaySFX
+{
+    public AudioClip SFX;
+    public float Volume;
+    public bool Loop;
+
+    public PlaySFX(AudioClip sfx, float volume = 1f, bool loop = false)
+        => (this.SFX, this.Volume, this.Loop) = (sfx, volume, loop);
+
+    public void Set(AudioClip sfx, float volume = 1f, bool loop = false)
+        => (this.SFX, this.Volume, this.Loop) = (sfx, volume, loop);
+}
+
+[System.Serializable]
+public struct SetMasterVolume
+{
+    public float Volume;
+    public SetMasterVolume(float volume = 1f) => this.Volume = volume;
+
+    public void Set(float volume) => this.Volume = volume;
+}
+
+public struct SetMusicVolume
+{
+    public float Volume;
+    public SetMusicVolume(float volume = 1f) => this.Volume = volume;
+
+    public void Set(float volume) => this.Volume = volume;
+}
+
+public struct SetSFXVolume
+{
+    public float Volume;
+    public SetSFXVolume(float volume = 1f) => this.Volume = volume;
+
+    public void Set(float volume) => this.Volume = volume;
+}
 #endregion

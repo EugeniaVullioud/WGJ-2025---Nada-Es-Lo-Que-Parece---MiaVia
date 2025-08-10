@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
@@ -7,10 +8,13 @@ public class EventManager : MonoBehaviour
     private void Awake() => Instance = this;
 
     private PoolManager poolManager = new PoolManager();
+
+    /*
     void GenerateEvent<T>(Func<T> createInstance) where T: struct
     {
         // Get the pool for the specific event type
         var pool = poolManager.GetPool<T>(createInstance);
+
 
         // Get a pooled struct or create a new one
         var eventData = pool.Get();
@@ -19,25 +23,119 @@ public class EventManager : MonoBehaviour
         EventBus.Publish(eventData);
 
         // Return the struct to the pool after use
-        pool.Return(eventData);
+        //pool.Return(eventData);
+    }
+    */
+
+    public delegate void RefAction<T>(ref T item);
+
+    private void GenerateEvent<T>(RefAction<T> initializer) where T : struct
+    {
+        var pool = poolManager.GetPool<T>();
+        var e = pool.Get();
+        initializer(ref e);
+        EventBus.Publish(e);
+        pool.Return(e);
     }
 
-    #region Difficulty
-    public void OnEasyDifficultyChosen() => GenerateEvent(() => new DifficultyChosen( DifficultyTypes.Easy));
-    public void OnMediumDifficultyChosen() => GenerateEvent(() => new DifficultyChosen(DifficultyTypes.Medium));
-    public void OnHardDifficultyChosen() => GenerateEvent(() => new DifficultyChosen(DifficultyTypes.Hard));
+    #region Difficulty Settings
+    public void OnEasyDifficultyChosen()
+        => GenerateEvent<DifficultyChosen>((ref DifficultyChosen e) => e.Set(DifficultyTypes.Easy));
+
+    public void OnMediumDifficultyChosen()
+        => GenerateEvent<DifficultyChosen>((ref DifficultyChosen e) => e.Set(DifficultyTypes.Medium));
+
+    public void OnHardDifficultyChosen()
+        => GenerateEvent<DifficultyChosen>((ref DifficultyChosen e) => e.Set(DifficultyTypes.Hard));
     #endregion
+
 
     #region Progress Bars
-    public void OnModifyShameStat(float amount) => GenerateEvent(() => new ModifyShameStat(amount));
-    public void OnModifyDistanceStat(float amount) => GenerateEvent(() => new ModifyDistanceTimeStat(amount));
-    public void OnModifyDecisionTimerStat(float amount) => GenerateEvent(() => new ModifyDecisionTimeStat(amount));
+    public void OnModifyShameStat(float amount)
+        => GenerateEvent<ModifyShameStat>((ref ModifyShameStat e) => e.Set(amount));
+
+    public void OnModifyDistanceStat(float amount)
+        => GenerateEvent<ModifyDistanceTimeStat>((ref ModifyDistanceTimeStat e) => e.Set(amount));
+
+    public void OnModifyDecisionTimerStat(float amount)
+        => GenerateEvent<ModifyDecisionTimeStat>((ref ModifyDecisionTimeStat e) => e.Set(amount));
     #endregion
 
+
     #region Decisions
-    public void OnSetNextDecision(DecisionData amount) => GenerateEvent(() => new SetNextDecision(amount));
-    public void OnTriggerNextDecision() => GenerateEvent(() => new TriggerNextDecision());
+    public void OnSetNextDecision(DecisionData amount)
+        => GenerateEvent<SetNextDecision>((ref SetNextDecision e) => e.Set(amount));
+
+    public void OnTriggerNextDecision()
+        => GenerateEvent<TriggerNextDecision>((ref TriggerNextDecision e) => { });
+    #endregion
 
 
+    #region Menu
+    public void OnMainMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.MainMenu));
+
+    public void OnNoneMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.None));
+
+    public void OnCreditsMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.CreditsMenu));
+
+    public void OnSoundMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.SoundMenu));
+
+    public void OnVideoMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.VideoMenu));
+
+    public void OnDecisionMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.DecisionMenu));
+
+    public void OnInGameMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.InGameMenu));
+
+    public void OnEndingMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.EndingMenu));
+
+    public void OnHowToPlayMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.HowToPlayMenu));
+
+    public void OnDifficultyMenuChosen()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.DifficultyMenu));
+    #endregion
+
+
+    #region Game Management
+    public void OnExitGame()
+        => GenerateEvent<ExitGame>((ref ExitGame e) => { });
+
+    public void OnResetGame()
+        => GenerateEvent<ResetGame>((ref ResetGame e) => { });
+
+    public void OnPlayAgain()
+        => GenerateEvent<PlayAgain>((ref PlayAgain e) => { });
+
+    public void OnLost()
+        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.LoseMenu));
+    #endregion
+
+
+    #region Visuals
+    public void OnVisualsReady(bool done)
+        => GenerateEvent<VisualsReady>((ref VisualsReady e) => e.Set(done));
+    #endregion
+
+
+    #region Audio
+    public void OnPlaySFX(AudioClip sound, float volume, bool loop)
+        => GenerateEvent<PlaySFX>((ref PlaySFX e) => e.Set(sound, volume, loop));
+
+    public void OnSetMasterVolume(float volume)
+        => GenerateEvent<SetMasterVolume>((ref SetMasterVolume e) => e.Set(volume));
+
+    public void OnSetMusicVolume(float volume)
+        => GenerateEvent<SetMusicVolume>((ref SetMusicVolume e) => e.Set(volume));
+
+    public void OnSetSFXVolume(float volume)
+        => GenerateEvent<SetSFXVolume>((ref SetSFXVolume e) => e.Set(volume));
     #endregion
 }

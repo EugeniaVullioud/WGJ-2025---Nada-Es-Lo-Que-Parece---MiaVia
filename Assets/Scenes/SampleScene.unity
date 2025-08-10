@@ -3561,7 +3561,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1205803743}
-  m_Father: {fileID: 1144522619}
+  m_Father: {fileID: 956111205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5135,7 +5135,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 872839605}
-  m_Father: {fileID: 1144522619}
+  m_Father: {fileID: 956111205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6503,7 +6503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &855529721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6839,6 +6839,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893416530}
   m_CullTransparentMesh: 1
+--- !u!1 &956111204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 956111205}
+  - component: {fileID: 956111206}
+  m_Layer: 5
+  m_Name: Sliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &956111205
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956111204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 481799474}
+  - {fileID: 684180360}
+  m_Father: {fileID: 1144522619}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &956111206
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956111204}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &957570021
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,6 +8443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1144522619}
   - component: {fileID: 1144522620}
+  - component: {fileID: 1144522621}
   m_Layer: 5
   m_Name: Menu - Visuals While Not Deciding
   m_TagString: Untagged
@@ -8412,8 +8463,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 481799474}
-  - {fileID: 684180360}
+  - {fileID: 956111205}
   m_Father: {fileID: 1223698181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -8433,6 +8483,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1144522621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144522618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be98d3f60e629a4b8b8e1a0198ec8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliderGroups:
+  - {fileID: 956111206}
+  fadeDurationPerSlider: 0.5
 --- !u!1 &1146044906
 GameObject:
   m_ObjectHideFlags: 0
@@ -9854,7 +9919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82638471e1f161a4097b3eb6c3c2d67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 466637919027029892, guid: 2d8129d9b2972cc4faa7e0e0e92d0a85, type: 3}
+  prefab: {fileID: 5718156530519348125, guid: ee89dc6049e9b614eb77c7ecf62c8355, type: 3}
   poolSize: 50
   spawnInterval: 1
   spawnDistance: 500
@@ -11922,6 +11987,7 @@ MonoBehaviour:
   soundMenu: {fileID: 458221462}
   videoMenu: {fileID: 1071426688}
   decisionMenu: {fileID: 1150284740}
+  inGameMenu: {fileID: 1144522621}
   endingMenu: {fileID: 102490480}
   howToPlayMenu: {fileID: 1038065403}
   difficultyMenu: {fileID: 741148090}

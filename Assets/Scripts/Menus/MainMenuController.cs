@@ -39,9 +39,13 @@ public class MainMenuController : MonoBehaviour, IMenuController
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
-            buttonsGroup.alpha = Mathf.Clamp01(elapsed / fadeDuration);
+
+            // Lerp from 0 to 1 based on the elapsed time
+            buttonsGroup.alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
+
             yield return null;
         }
+        // Ensure the alpha is exactly 1 at the end
         buttonsGroup.alpha = 1f;
         SetButtonsInteractable(true);
     }

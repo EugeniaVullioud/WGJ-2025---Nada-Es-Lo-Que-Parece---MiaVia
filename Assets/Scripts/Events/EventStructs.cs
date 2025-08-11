@@ -185,10 +185,17 @@ public struct SetSFXVolume
     public void Set(float volume) => this.Volume = volume;
 }
 [System.Serializable]
-public struct ToggleMute : IEventDataSetter<bool>
+public struct ToggleMuteMaster : IEventDataSetter<bool>
 {
     public bool Mute;
-    public ToggleMute(bool mute) => this.Mute = mute;
+    public ToggleMuteMaster(bool mute) => this.Mute = mute;
+
+    public void Set(bool ready) => this.Mute = ready;
+}
+public struct ToggleMuteMusic : IEventDataSetter<bool>
+{
+    public bool Mute;
+    public ToggleMuteMusic(bool mute) => this.Mute = mute;
 
     public void Set(bool ready) => this.Mute = ready;
 }

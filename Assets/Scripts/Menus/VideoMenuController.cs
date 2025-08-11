@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -24,12 +25,17 @@ public class VideoMenuController : MonoBehaviour, IMenuController
     {
         gameObject.SetActive(true);
         startButton.gameObject.SetActive(false);
-        loadingTextGroup.alpha = 1f;
+        loadingTextGroup.alpha = 0f;
         startButton.interactable = false;
+
+        EventManager.Instance.OnVisualsReady(true);
+        _readyToPlay = true;
 
         if (videoRoutine != null)
             StopCoroutine(videoRoutine);
         videoRoutine = StartCoroutine(PlayVideoAndWaitRoutine());
+
+
     }
 
     public void OnDisableMenu()
@@ -45,12 +51,14 @@ public class VideoMenuController : MonoBehaviour, IMenuController
     {
         // Play video
         videoPlayer.Play();
-
         // Wait for video to finish
-        while (videoPlayer.isPlaying)
-            yield return null;
+
+        float l = (float)videoPlayer.length;
+        yield return new WaitForSeconds(l);
 
         float timer = 0f;
+
+        loadingTextGroup.alpha = 1f;
 
         // Show loading text at least minLoadingTime seconds
         while (timer < minLoadingTime || !_readyToPlay)
@@ -62,8 +70,7 @@ public class VideoMenuController : MonoBehaviour, IMenuController
 
         // Hide loading text, show start button
         StartCoroutine(FadeOutCanvasGroup(loadingTextGroup, 0.5f));
-        startButton.gameObject.SetActive(true);
-        startButton.interactable = true;
+      
     }
 
     private IEnumerator FadeOutCanvasGroup(CanvasGroup cg, float duration)
@@ -78,5 +85,20 @@ public class VideoMenuController : MonoBehaviour, IMenuController
             yield return null;
         }
         cg.alpha = 0f;
+
+        startButton.gameObject.SetActive(true);
+        startButton.interactable = true;
+    }
+    private void Update()
+    {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            videoPlayer.Stop();
+
+            StopCoroutine(videoRoutine);
+
+            startButton.gameObject.SetActive(true);
+            startButton.interactable = true;
+        }
     }
 }

@@ -36,7 +36,8 @@ public class AudioManager : MonoBehaviour
         EventBus.Subscribe<SetMusicVolume>((e) => SetVolumeParameters(volumeParam2, e.Volume));
         EventBus.Subscribe<SetSFXVolume>((e) => SetVolumeParameters(volumeParam3, e.Volume));
         EventBus.Subscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop));
-        EventBus.Subscribe<ToggleMute>((ev) => ToggleMute(ev.Mute));
+        EventBus.Subscribe<ToggleMuteMaster>((ev) => ToggleMute(volumeParam1,ev.Mute));
+        EventBus.Subscribe<ToggleMuteMusic>((ev) => ToggleMute(volumeParam2,ev.Mute));
     }
     private void OnDisable()
     {
@@ -86,13 +87,13 @@ public class AudioManager : MonoBehaviour
         audioSourcePool.Return(source);
     }
 
-    private void ToggleMute(bool mute)
+    private void ToggleMute(string target, bool mute)
     {
         if (mute)
         {
-            SetVolumeParameters(volumeParam1, 0.0001f);
+            SetVolumeParameters(target, 0.0001f);
         }
-        else SetVolumeParameters(volumeParam1, lastMasterVolume);
+        else SetVolumeParameters(target, lastMasterVolume);
     }
 
     #region Music Control

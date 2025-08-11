@@ -15,6 +15,17 @@ public struct DifficultyChosen : IEventDataSetter<DifficultyTypes>
 
     public void Set(DifficultyTypes difficulty) => this.Difficulty = difficulty;
 }
+[System.Serializable]
+
+public struct ModifySpeed : IEventDataSetter<float>
+{
+    public float Amount;
+
+    public ModifySpeed(float amount) => this.Amount = amount;
+
+    public void Set(float amount) => this.Amount = amount;
+}
+
 #endregion
 
 
@@ -73,6 +84,7 @@ public struct SetNextDecision : IEventDataSetter<DecisionData>
 
 [System.Serializable]
 public struct TriggerNextDecision { }
+public struct FinishDecisionMaking { }
 #endregion
 
 

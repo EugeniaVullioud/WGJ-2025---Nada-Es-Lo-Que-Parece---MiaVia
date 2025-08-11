@@ -47,6 +47,9 @@ public class EventManager : MonoBehaviour
 
     public void OnHardDifficultyChosen()
         => GenerateEvent<DifficultyChosen>((ref DifficultyChosen e) => e.Set(DifficultyTypes.Hard));
+
+    public void OnChangeSpeed()
+      => GenerateEvent<ModifySpeed>((ref ModifySpeed e) => { });
     #endregion
 
 
@@ -65,9 +68,15 @@ public class EventManager : MonoBehaviour
     #region Decisions
     public void OnSetNextDecision(DecisionData amount)
         => GenerateEvent<SetNextDecision>((ref SetNextDecision e) => e.Set(amount));
-
+    
     public void OnTriggerNextDecision()
         => GenerateEvent<TriggerNextDecision>((ref TriggerNextDecision e) => { });
+
+    public void OnFinishDecisionMaking()
+       => GenerateEvent<FinishDecisionMaking>((ref FinishDecisionMaking e) => { });
+
+    public void OnEnterDecisionMaking()
+     => GenerateEvent<EnterDecisionMakingState>((ref EnterDecisionMakingState e) => { });
     #endregion
 
 

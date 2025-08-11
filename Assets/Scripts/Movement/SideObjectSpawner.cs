@@ -36,10 +36,10 @@ public class SideObjectSpawner : MonoBehaviour
             var pool = new ComponentPool<MovingFadingObject>(prefab, poolSize, transform);
             _pools.Add(pool);
         }
-
         // Start spawn loops for both sides
-        StartCoroutine(SpawnLoop(-1)); // Left lane
-        StartCoroutine(SpawnLoop(1));  // Right lane
+
+        ResumeSpawning();
+       
     }
 
     private IEnumerator SpawnLoop(int laneSide)
@@ -99,4 +99,31 @@ public class SideObjectSpawner : MonoBehaviour
         }
     }
 
+
+    public void PauseSpawning()
+    {
+        foreach (var coroutine in _spawnCoroutines)
+        {
+            StopCoroutine(coroutine);
+        }
+        _spawnCoroutines.Clear();
+    }
+
+    public void ResumeSpawning()
+    {
+        _spawnCoroutines.Add(StartCoroutine(SpawnLoop(-1)));
+        _spawnCoroutines.Add(StartCoroutine(SpawnLoop(1)));
+    }
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
+    }
+
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
+    }
 }

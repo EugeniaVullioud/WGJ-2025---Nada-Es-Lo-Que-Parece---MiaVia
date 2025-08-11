@@ -18,6 +18,9 @@ public class MovingFadingObject : MonoBehaviour
     private float _growthStartPercent = 0.7f;
     [SerializeField]private Vector3 _initialScale;
 
+    private bool _isMoving;
+    private bool _isPaused;
+
     public MovingFadingObject PrefabReference { get; private set; }
 
     public void SetPrefabReference(MovingFadingObject prefab)
@@ -31,7 +34,17 @@ public class MovingFadingObject : MonoBehaviour
         _renderer = GetComponent<Renderer>();
         _startColor = _renderer.material.color;
     }
+    private void OnEnable()
+    {
+        EventBus.Subscribe<EnterDecisionMakingState>((e) => { HandlePause(); });
+        EventBus.Subscribe<FinishDecisionMaking>((e) => { HandleResume(); });
+    }
 
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { HandlePause(); });
+        EventBus.Unsubscribe<FinishDecisionMaking>((e) => { HandleResume(); });
+    }
     public void InitMovement(Vector3 startPos, Vector3 endPos, float travelTime, System.Action<MovingFadingObject> onFinished, float maxScaleMultiplier = 1f,
                              float growthStartPercent = 0.7f)
     {
@@ -42,6 +55,8 @@ public class MovingFadingObject : MonoBehaviour
         _onFinished = onFinished;
 
         _isActive = true;
+        _isMoving = true;
+        _isPaused = false;
         gameObject.SetActive(true);
 
         _initialScale = transform.localScale;
@@ -54,8 +69,7 @@ public class MovingFadingObject : MonoBehaviour
 
     private void Update()
     {
-        if (!_isActive)
-            return;
+        if (!_isMoving || _isPaused) return;
 
         _elapsedTime += Time.deltaTime;
         float t = Mathf.Clamp01(_elapsedTime / _travelTime);
@@ -92,12 +106,20 @@ public class MovingFadingObject : MonoBehaviour
         if (_elapsedTime >= _travelTime)
         {
             _isActive = false;
+            _isMoving = false;
+
             _onFinished?.Invoke(this);
         }
     }
+
     public void ResetObject()
     {
         transform.localScale = _initialScale;
+        _isMoving = false;
+        _isPaused = false;
     }
+
+    private void HandlePause() => _isPaused = true;
+    private void HandleResume() => _isPaused = false;
 }
 

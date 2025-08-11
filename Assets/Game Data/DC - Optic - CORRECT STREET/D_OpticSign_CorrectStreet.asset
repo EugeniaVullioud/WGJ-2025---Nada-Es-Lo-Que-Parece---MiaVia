@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1da31ca557526b4cbbc66f595a12225, type: 3}
+  m_Name: D_OpticSign_CorrectStreet
+  m_EditorClassIdentifier: 
+  decisionId: OpticC
+  prompt: "\xBFSer\xE1 la calle de la \xF3ptica?\r"
+  timeLimitSeconds: 5
+  choices:
+  - choiceText: Si, genial!
+    consequences:
+    - {fileID: 11400000, guid: 42e6746a901677849b575411ed24600b, type: 2}
+    - {fileID: 11400000, guid: 65fe0bd0aa0a79142b847123c4493898, type: 2}
+  - choiceText: No, es la siguiente
+    consequences:
+    - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
+    - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
+  defaultChoice:
+    choiceText: No, es la siguiente
+    consequences:
+    - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
+    - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}

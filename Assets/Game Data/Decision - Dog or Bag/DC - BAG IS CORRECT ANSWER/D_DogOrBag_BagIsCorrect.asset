@@ -13,21 +13,23 @@ MonoBehaviour:
   m_Name: D_DogOrBag_BagIsCorrect
   m_EditorClassIdentifier: 
   decisionId: BOLSACORRECTA
-  prompt: Elegir si es un perro o una bolsa
+  prompt: "Eso que se mueve \xBFqu\xE9 es? \xBFUna bolsa o un perro?\r\n"
   timeLimitSeconds: 10
   choices:
-  - choiceText: ES UNA BOLSA
+  - choiceText: ESQUIVAR
     consequences:
     - {fileID: 11400000, guid: 933c0f9b4474c8e4999812e622bbcc8e, type: 2}
     - {fileID: 11400000, guid: 8b007c681e059974293b7559b09476e5, type: 2}
     - {fileID: 11400000, guid: a92280bc01bbab74a8ca341332a508c4, type: 2}
-  - choiceText: ES UN PERRO
+    - {fileID: 11400000, guid: 3d6f26192d3000a4889aee95c10532f4, type: 2}
+  - choiceText: ACARICIAR
     consequences:
     - {fileID: 11400000, guid: 9e848db4a19a4d84aa25be4f270db3c3, type: 2}
     - {fileID: 11400000, guid: d6f9e003a9b87444fb6c512cd3367fb6, type: 2}
     - {fileID: 11400000, guid: ff34862ae525fac419ef68dd736454e5, type: 2}
+    - {fileID: 11400000, guid: d307a4f6a6162f3498f45dde9926c1f2, type: 2}
   defaultChoice:
-    choiceText: DEFAULT - ES UN PERRO
+    choiceText: ACARICIAR
     consequences:
     - {fileID: 11400000, guid: 9e848db4a19a4d84aa25be4f270db3c3, type: 2}
     - {fileID: 11400000, guid: d6f9e003a9b87444fb6c512cd3367fb6, type: 2}

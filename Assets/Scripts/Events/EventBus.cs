@@ -53,8 +53,14 @@ public static class EventBus
     {
         if (listeners.TryGetValue(typeof(T), out var list))
         {
+            // Make a shallow copy to avoid modification during iteration
+            var listenersCopy = new List<Action<T>>((List<Action<T>>)list);
+            foreach (var del in listenersCopy)
+            {
+                del(evt);
+            }
             // Invoke each listener callback with the event data
-            foreach (var del in (List<Action<T>>)list)  del(evt);
+            //foreach (var del in (List<Action<T>>)list)  del(evt);
         }
     }
 }

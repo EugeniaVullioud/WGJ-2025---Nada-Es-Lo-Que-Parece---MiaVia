@@ -37,13 +37,19 @@ public class MovingFadingObject : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { HandlePause(); });
+        EventBus.Subscribe<LostGame>((e) => { HandlePause(); });
+        EventBus.Subscribe<WonGame>((e) => { HandlePause(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { HandleResume(); });
+        EventBus.Subscribe<PlayAgain>((e) => { HandleResume(); });
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { HandlePause(); });
         EventBus.Unsubscribe<FinishDecisionMaking>((e) => { HandleResume(); });
+        EventBus.Unsubscribe<PlayAgain>((e) => { HandleResume(); });
+        EventBus.Unsubscribe<LostGame>((e) => { HandlePause(); });
+        EventBus.Unsubscribe<WonGame>((e) => { HandlePause(); });
     }
     public void InitMovement(Vector3 startPos, Vector3 endPos, float travelTime, System.Action<MovingFadingObject> onFinished, float maxScaleMultiplier = 1f,
                              float growthStartPercent = 0.7f)

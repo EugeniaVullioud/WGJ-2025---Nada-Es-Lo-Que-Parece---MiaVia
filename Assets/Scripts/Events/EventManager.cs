@@ -121,7 +121,8 @@ public class EventManager : MonoBehaviour
 
     public void OnResetGame()
         => GenerateEvent<ResetGame>((ref ResetGame e) => { });
-
+    public void OnWonGame()
+       => GenerateEvent<WonGame>((ref WonGame e) => { });
     public void OnPlayAgain()
         => GenerateEvent<PlayAgain>((ref PlayAgain e) => { });
 

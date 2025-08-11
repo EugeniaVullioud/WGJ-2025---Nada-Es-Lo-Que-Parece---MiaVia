@@ -16,6 +16,8 @@ public class MovementManager : MonoBehaviour
     private void Start()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { Pause(); });
+        EventBus.Subscribe<LostGame>((e) => { Pause(); });
+        EventBus.Subscribe<WonGame>((e) => { Pause(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { Resume(); });
         EventBus.Subscribe<PlayAgain>((e) => { Resume(); });
 

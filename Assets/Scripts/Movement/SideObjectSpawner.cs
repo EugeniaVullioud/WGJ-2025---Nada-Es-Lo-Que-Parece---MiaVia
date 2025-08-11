@@ -118,12 +118,19 @@ public class SideObjectSpawner : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
+        EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); });
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<LostGame>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<WonGame>((e) => { PauseSpawning(); });
         EventBus.Unsubscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
+        EventBus.Unsubscribe<PlayAgain>((e) => { ResumeSpawning(); });
+
     }
 }

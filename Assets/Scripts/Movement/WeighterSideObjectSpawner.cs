@@ -54,9 +54,14 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
     public float functionalMinTimeSpacing = 2f;
     public float decorativeMinTimeSpacing = 1f;
-    private void Start()
+
+    private void Awake()
     {
         _cam = Camera.main;
+
+    }
+    private void Start()
+    {
 
         foreach (var sp in spawnablePrefabs)
         {
@@ -138,7 +143,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
         }*/
         var decorativePrefabs = spawnablePrefabs.Where(sp => !sp.isFunctional).ToList();
 
-        while (true)
+        while (spawnablePrefabs!= null && spawnablePrefabs.Count>0)
         {
             bool laneBlocked = Time.time < _laneBlockUntil[laneSide];
             bool functionalsQueued = _functionalQueue.Count > 0;
@@ -238,6 +243,12 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 bool canSpawnLeft = (now - _lastFunctionalSpawnTime[-1]) >= functionalMinTimeSpacing;
                 bool canSpawnRight = (now - _lastFunctionalSpawnTime[1]) >= functionalMinTimeSpacing;
 
+                if (!canSpawnLeft && !canSpawnRight && spawnablePrefabs.Count ==0)
+                {
+                    var randdom = Random.Range(0, 2);
+                    if (randdom == 0) canSpawnLeft = true;
+                    else canSpawnRight = true;
+                }
                 if (canSpawnLeft)
                 {
                     var prefab = _functionalQueue.Dequeue();
@@ -307,8 +318,8 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        _spawnCoroutines.Add(StartCoroutine(DecorativeLoop(1)));
-        _spawnCoroutines.Add(StartCoroutine(DecorativeLoop(-1)));
+        if (spawnablePrefabs != null && spawnablePrefabs.Count > 0) _spawnCoroutines.Add(StartCoroutine(DecorativeLoop(1)));
+        if (spawnablePrefabs != null && spawnablePrefabs.Count > 0) _spawnCoroutines.Add(StartCoroutine(DecorativeLoop(-1)));
         _functionalCoroutine = StartCoroutine(FunctionalLoop());
         _spawnCoroutines.Add(_functionalCoroutine);
     }
@@ -332,21 +343,33 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     public void PauseSpawning()
     {
         foreach (var c in _spawnCoroutines) StopCoroutine(c);
+        PauseFunctionalLoop();
         _spawnCoroutines.Clear();
     }
 
     public void ResumeSpawning()
     {
         StartSpawning();
+        ResumeFunctionalLoop();
     }
-
-
-    private void Update()
+    private void OnEnable()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
-        {
-            TriggerFunctionalSpawn();
-
-        }
+        EventBus.Subscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); });
+        EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); });
+        if (spawnableFunctionalPrefabs!= null && spawnableFunctionalPrefabs.Count>0) EventBus.Subscribe<TriggerNextDecision>((e) => { TriggerFunctionalSpawn(); });
+        EventBus.Subscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
     }
+   
+    private void OnDisable()
+    {
+        EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
+        if (spawnableFunctionalPrefabs != null && spawnableFunctionalPrefabs.Count > 0) EventBus.Unsubscribe<TriggerNextDecision>((e) => { TriggerFunctionalSpawn(); });
+        EventBus.Unsubscribe<LostGame>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<WonGame>((e) => { PauseSpawning(); });
+        EventBus.Unsubscribe<PlayAgain>((e) => { ResumeSpawning(); });
+    }
+
 }

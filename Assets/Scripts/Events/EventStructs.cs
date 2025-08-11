@@ -118,6 +118,9 @@ public struct LostGame { }
 public struct ResetGame { }
 
 [System.Serializable]
+public struct WonGame { }
+
+[System.Serializable]
 public struct PlayAgain { }
 #endregion
 

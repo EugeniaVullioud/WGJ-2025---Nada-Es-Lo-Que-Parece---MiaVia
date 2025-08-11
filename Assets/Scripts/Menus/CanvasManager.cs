@@ -45,6 +45,9 @@ public class CanvasManager : MonoBehaviour
     {
         EventBus.Subscribe<MenuChosen>((menu) => ShowMenu(menu.Menu));
         EventBus.Subscribe<PlayAgain>((menu) => ShowMenu(MenuType.InGameMenu));
+        EventBus.Subscribe<EnterDecisionMakingState>((menu) => ShowMenu(MenuType.DecisionMenu));
+        EventBus.Subscribe<FinishDecisionMaking>((menu) => ShowMenu(MenuType.InGameMenu));
+
         EventManager.Instance.OnMainMenuChosen();
     }
     public void ShowMenu(MenuType menu)

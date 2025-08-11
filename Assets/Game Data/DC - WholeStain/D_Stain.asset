@@ -22,12 +22,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 81fb5cc6a31fb414ab57c91eba66ca8d, type: 2}
     - {fileID: 11400000, guid: c38781ce0f4458b4c81e017857c2eccc, type: 2}
     - {fileID: 11400000, guid: 97b131f76460c2644aa5837c27e5c4b7, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
   - choiceText: ATRAVESAR
     consequences:
     - {fileID: 11400000, guid: 0d5ff1e2fc5f6154c9a2e4695933435f, type: 2}
     - {fileID: 11400000, guid: 81fb5cc6a31fb414ab57c91eba66ca8d, type: 2}
     - {fileID: 11400000, guid: bf6648be255110846b79892a7ffcf01c, type: 2}
     - {fileID: 11400000, guid: a9550606565fe544ca239cb1b0632af4, type: 2}
+    - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
   defaultChoice:
     choiceText: ESQUIVAR
     consequences:
@@ -35,3 +37,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 81fb5cc6a31fb414ab57c91eba66ca8d, type: 2}
     - {fileID: 11400000, guid: c38781ce0f4458b4c81e017857c2eccc, type: 2}
     - {fileID: 11400000, guid: 97b131f76460c2644aa5837c27e5c4b7, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 0}
+  prefab: {fileID: 0}

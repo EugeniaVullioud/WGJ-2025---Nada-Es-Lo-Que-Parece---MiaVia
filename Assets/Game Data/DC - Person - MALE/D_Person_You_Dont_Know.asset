@@ -21,14 +21,19 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 93f52934c04021143a5644ead76a3926, type: 2}
     - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
     - {fileID: 11400000, guid: 7647f6b200084924ab44263331045d1e, type: 2}
+    - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
   - choiceText: IGNORAR
     consequences:
     - {fileID: 11400000, guid: 5868ca79856eb904c900044344f83e51, type: 2}
     - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
     - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
   defaultChoice:
     choiceText: IGNORAR
     consequences:
     - {fileID: 11400000, guid: 5868ca79856eb904c900044344f83e51, type: 2}
     - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
     - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 0}
+  prefab: {fileID: 0}

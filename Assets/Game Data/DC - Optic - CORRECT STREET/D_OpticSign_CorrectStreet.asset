@@ -20,12 +20,17 @@ MonoBehaviour:
     consequences:
     - {fileID: 11400000, guid: 42e6746a901677849b575411ed24600b, type: 2}
     - {fileID: 11400000, guid: 65fe0bd0aa0a79142b847123c4493898, type: 2}
+    - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
   - choiceText: No, es la siguiente
     consequences:
     - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
     - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
   defaultChoice:
     choiceText: No, es la siguiente
     consequences:
     - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
     - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 0}
+  prefab: {fileID: 0}

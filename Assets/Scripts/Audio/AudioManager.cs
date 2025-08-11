@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     public string volumeParam2 = "MusicVolume";
     public string volumeParam3 = "SFXVolume";
 
+    public float lastMasterVolume = 1f;
 
     [Header("Default Volume Values (0 to 1)")]
     [Range(0f, 1f)] public float defaultMasterVolume = 1f;
@@ -31,10 +32,11 @@ public class AudioManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus.Subscribe<SetMasterVolume>((e) => SetVolumeParameters(volumeParam1, e.Volume));
+        EventBus.Subscribe<SetMasterVolume>((e) => { SetVolumeParameters(volumeParam1, e.Volume); lastMasterVolume = e.Volume; });
         EventBus.Subscribe<SetMusicVolume>((e) => SetVolumeParameters(volumeParam2, e.Volume));
         EventBus.Subscribe<SetSFXVolume>((e) => SetVolumeParameters(volumeParam3, e.Volume));
         EventBus.Subscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop));
+        EventBus.Subscribe<ToggleMute>((ev) => ToggleMute(ev.Mute));
     }
     private void OnDisable()
     {
@@ -43,6 +45,7 @@ public class AudioManager : MonoBehaviour
     }
     void Awake()
     {
+        lastMasterVolume = defaultMasterVolume;
         audioSourcePool = new ComponentPool<AudioSource>(audioSourcePrefab, 10, transform);
 
         SetVolumeParameters(volumeParam1, defaultMasterVolume);
@@ -83,6 +86,14 @@ public class AudioManager : MonoBehaviour
         audioSourcePool.Return(source);
     }
 
+    private void ToggleMute(bool mute)
+    {
+        if (mute)
+        {
+            SetVolumeParameters(volumeParam1, 0.0001f);
+        }
+        else SetVolumeParameters(volumeParam1, lastMasterVolume);
+    }
 
     #region Music Control
 

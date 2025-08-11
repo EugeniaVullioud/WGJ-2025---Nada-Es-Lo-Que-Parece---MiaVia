@@ -81,7 +81,14 @@ public struct SetNextDecision : IEventDataSetter<DecisionData>
 
     public void Set(DecisionData next) => this.NextDecision = next;
 }
+public struct OnCorrectlyAnswered : IEventDataSetter<bool>
+{
+    public bool WasCorrect;
 
+    public OnCorrectlyAnswered(bool answer) => this.WasCorrect = answer;
+
+    public void Set(bool answer) => this.WasCorrect = answer;
+}
 [System.Serializable]
 public struct TriggerNextDecision { }
 public struct FinishDecisionMaking { }
@@ -102,9 +109,15 @@ public struct MenuChosen : IEventDataSetter<MenuType>
 
 #region Game Management
 [System.Serializable]
-public struct ExitGame{ }  
+public struct ExitGame{ }
+
+[System.Serializable]
 public struct LostGame { }
+
+[System.Serializable]
 public struct ResetGame { }
+
+[System.Serializable]
 public struct PlayAgain { }
 #endregion
 
@@ -118,6 +131,17 @@ public struct VisualsReady: IEventDataSetter<bool>
 
     public void Set(bool ready) => this.Ready = ready;
 }
+#endregion
+
+#region Shame
+[System.Serializable]
+public struct EmptyShame { }
+
+[System.Serializable]
+public struct HalfShame { }
+
+[System.Serializable]
+public struct FullShame { }
 #endregion
 
 
@@ -159,5 +183,13 @@ public struct SetSFXVolume
     public SetSFXVolume(float volume = 1f) => this.Volume = volume;
 
     public void Set(float volume) => this.Volume = volume;
+}
+[System.Serializable]
+public struct ToggleMute : IEventDataSetter<bool>
+{
+    public bool Mute;
+    public ToggleMute(bool mute) => this.Mute = mute;
+
+    public void Set(bool ready) => this.Mute = ready;
 }
 #endregion

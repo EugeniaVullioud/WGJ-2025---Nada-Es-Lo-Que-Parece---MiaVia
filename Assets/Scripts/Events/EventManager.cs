@@ -114,6 +114,8 @@ public class EventManager : MonoBehaviour
 
 
     #region Game Management
+    public void OnCorrectAnswer(bool right)
+        => GenerateEvent<OnCorrectlyAnswered>((ref OnCorrectlyAnswered e) => e.Set(right));
     public void OnExitGame()
         => GenerateEvent<ExitGame>((ref ExitGame e) => { });
 
@@ -135,6 +137,8 @@ public class EventManager : MonoBehaviour
 
 
     #region Audio
+    public void OnToggleMute(bool done)
+       => GenerateEvent<ToggleMute>((ref ToggleMute e) => e.Set(done));
     public void OnPlaySFX(AudioClip sound, float volume, bool loop)
         => GenerateEvent<PlaySFX>((ref PlaySFX e) => e.Set(sound, volume, loop));
 
@@ -146,5 +150,14 @@ public class EventManager : MonoBehaviour
 
     public void OnSetSFXVolume(float volume)
         => GenerateEvent<SetSFXVolume>((ref SetSFXVolume e) => e.Set(volume));
+    #endregion
+
+    #region Shame Settings
+    public void OnEmptyShame()
+        => GenerateEvent<EmptyShame>((ref EmptyShame e) => { });
+
+    public void OnHalfShame()
+        => GenerateEvent<HalfShame>((ref HalfShame e) => { });
+
     #endregion
 }

@@ -8,14 +8,14 @@ using UnityEngine.UI;
 public class ProgressBarStatHandler
 {
     private Stat<float> _stat; // List of stats to manage (typically float stats)
-    private Slider[] progressBars; // List of sliders (progress bars) to update
+    private Image[] progressBars; // List of sliders (progress bars) to update
 
     /// <summary>
     /// Initializes the ProgressBarStatHandler with stats and corresponding sliders.
     /// </summary>
     /// <param name="stat">A list of stats to manage.</param>
     /// <param name="progressBars">A list of sliders (progress bars) that correspond to the stats.</param>
-    public ProgressBarStatHandler(Stat<float> stat, Slider[] progressBars)
+    public ProgressBarStatHandler(Stat<float> stat, Image[] progressBars)
     {
         this._stat = stat ?? throw new System.ArgumentNullException(nameof(stat), "Stat cannot be null");
         this.progressBars = progressBars ?? throw new System.ArgumentNullException(nameof(progressBars), "Progress bars cannot be null");
@@ -29,12 +29,12 @@ public class ProgressBarStatHandler
         // Loop through each progress bar and corresponding stat
         for (int i = 0; i < progressBars.Length; i++)
         {
-            Slider slider = progressBars[i];
+            Image slider = progressBars[i];
             // Update the slider value based on the current value of the stat
-            slider.value = _stat.CurrentValue / _stat.MaxValue;
+            slider.fillAmount = _stat.CurrentValue / _stat.MaxValue;
         }
     }
-
+    public float Current => _stat.CurrentValue / _stat.MaxValue;
     /// <summary>
     /// Modify the stat values by a given amount.
     /// </summary>
@@ -43,7 +43,6 @@ public class ProgressBarStatHandler
     public void ModifyStat(float amount)
     {      
        _stat.ModifyStat(amount);
-        UpdateProgressBars();
     }
    
     /// <summary>

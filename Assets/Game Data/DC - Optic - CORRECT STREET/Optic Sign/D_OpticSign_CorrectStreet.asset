@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: D_OpticSign_CorrectStreet
   m_EditorClassIdentifier: 
   decisionId: OpticC
-  prompt: "\xBFSer\xE1 la calle de la \xF3ptica?\r"
+  prompt: "\xBFSer\xE1 la calle de la \xF3ptica? Era Av. Manguito\r"
   timeLimitSeconds: 5
   choices:
   - choiceText: Si, genial!

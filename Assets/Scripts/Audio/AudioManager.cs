@@ -105,7 +105,8 @@ public class AudioManager : MonoBehaviour
     {
         if (newClip == null)
         {
-            //Debug.LogWarning("Trying to play a null music clip.");
+            //
+            //LogWarning("Trying to play a null music clip.");
             return;
         }
 

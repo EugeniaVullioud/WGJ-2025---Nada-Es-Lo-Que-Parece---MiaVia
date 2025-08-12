@@ -146,7 +146,6 @@ public class DistanceBarVisual : MonoBehaviour
         {
             return;
         }
-        Debug.Log("stat distance" + _distanceStatHandler.Current);
         mod = -1;
         animate = StartCoroutine(FillRoutine(handler, Mathf.Clamp01(target)));
     }

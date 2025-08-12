@@ -41,6 +41,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: fca1e00a672a3264681f97f3271abf7b, type: 2}
     - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
     - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
-  onZoom: {fileID: 0}
+  onZoom: {fileID: 1644237407416213863, guid: f176283818d7d72439a1e0c6b9d37919, type: 3}
   compare: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 4943556398841148718, guid: 69a0e68b1be9bac4ab23ce8121781e57, type: 3}

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -85,16 +84,5 @@ public class VideoMenuController : MonoBehaviour, IMenuController
         startButton.gameObject.SetActive(true);
         startButton.interactable = true;
     }
-    private void Update()
-    {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            videoPlayer.Stop();
 
-            StopCoroutine(videoRoutine);
-
-            startButton.gameObject.SetActive(true);
-            startButton.interactable = true;
-        }
-    }
 }

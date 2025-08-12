@@ -1,9 +1,6 @@
 using System.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class DistanceBarVisual : MonoBehaviour
 {
@@ -117,22 +114,7 @@ public class DistanceBarVisual : MonoBehaviour
     [Range(0, 101f)] public float progress = 0f;
     [Range(0, 101f)] public float target = 0f;
 
-    void Update()
-    {
-        // Set the position based on progress (0 to 1)
-
-
-        if (Keyboard.current.digit4Key.wasPressedThisFrame)
-        {
-            EventManager.Instance.OnModifyDistanceStat(10);
-
-        }
-        if (Keyboard.current.digit5Key.wasPressedThisFrame)
-        {
-            EventManager.Instance.OnModifyDistanceStat(-5);
-
-        }
-    }
+ 
     float mod;
     void Modify(float amount)
     {

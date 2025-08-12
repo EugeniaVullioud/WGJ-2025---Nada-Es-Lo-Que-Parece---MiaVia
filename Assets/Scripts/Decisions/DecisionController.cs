@@ -92,7 +92,6 @@ public class DecisionController : MonoBehaviour
         Renderer r = t.GetComponentInChildren<Renderer>();
         float objectHeight = r != null ? r.bounds.size.y : 0f;
 
-        Debug.Log(objectHeight);
         // We want to offset so the object appears centered by height
         float heightOffset = objectHeight * offsetPercentage;
 

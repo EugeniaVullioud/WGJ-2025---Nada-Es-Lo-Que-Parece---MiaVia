@@ -16,14 +16,18 @@ public class DecisionService : MonoBehaviour
     public static DecisionService Instance { get; private set; }
     private void Awake() => Instance = this;
 
+    MenuType menu;
     private void Start()
     {
         group.alpha = 0;
         group.interactable = false;
 
-        EventBus.Subscribe<PlayAgain>((stat) => { interruptUI = true; });
-        EventBus.Subscribe<WonGame>((stat) => { interruptUI = true; });
-        EventBus.Subscribe<PlayAgain>((stat) => { interruptUI = false; });
+        EventBus.Subscribe<LostGame>((stat) => { interruptUI = true; Interrupt(); });
+        EventBus.Subscribe<EnterDecisionMakingState>((stat) => { interruptUI = true; Interrupt(); });
+        EventBus.Subscribe<FinishDecisionMaking>((stat) => { interruptUI = false; });
+        EventBus.Subscribe<MenuChosen>((stat) => { menu = stat.Menu;  if ( MenuType.EndingMenu == stat.Menu || MenuType.LoseMenu == stat.Menu) { interruptUI = true; Interrupt(); } else interruptUI = false; });
+        EventBus.Subscribe<WonGame>((stat) => { interruptUI = true; Interrupt(); });
+        EventBus.Subscribe<PlayAgain>((stat) => { interruptUI = false; Interrupt(); });
         }
     public void ShowDecisionUI(DecisionData decision) 
     { 
@@ -34,15 +38,16 @@ public class DecisionService : MonoBehaviour
         EventManager.Instance.OnModifyDecisionTimerStat(timeRemaining);
     }
     bool interruptUI = false;
+
+    void Interrupt()
+    {
+        StopAllCoroutines();
+        group.alpha = 0;
+        group.interactable = false;
+    }
     public void ShowMessage(string message) 
     {
-        if (interruptUI)
-        {
-            StopAllCoroutines();
-            group.alpha = 0;
-            group.interactable = false;
-            return;
-        }
+      
         _text.text = message;
 
         //animate appear
@@ -68,7 +73,12 @@ public class DecisionService : MonoBehaviour
         group.alpha = 1;
         group.interactable = true;
 
-        yield return new WaitForSeconds(_displayDuration);
+        float t = 0;
+        while (!interruptUI && (MenuType.DecisionMenu != menu || MenuType.EndingMenu != menu || MenuType.LoseMenu != menu) )
+        {
+            t+= Time.deltaTime ;
+            yield return null;
+        }
         group.alpha = 0;
         group.interactable = false;
 

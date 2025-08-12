@@ -50,13 +50,14 @@ public class ShameBarVisual : MonoBehaviour
         EventBus.Subscribe<WonGame>((stat) => {
             _currentFill = 0; _targetFill = 0;
             _shameStatHandler.ResetStats(); UpdateFill(0);
-            StopCoroutine(shake);
+            if (shake != null) StopCoroutine(shake);
             _shake.transform.localRotation = originalRot;
+            _cg.alpha = 0;
         });
         EventBus.Subscribe<LostGame>((stat) => {
             _currentFill = 0; _targetFill = 0;
             _shameStatHandler.ResetStats(); UpdateFill(0);
-            StopCoroutine(shake);
+            if (shake!=null)StopCoroutine(shake);
             _shake.transform.localRotation = originalRot;
 
         });

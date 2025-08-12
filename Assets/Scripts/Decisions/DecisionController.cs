@@ -109,7 +109,6 @@ public class DecisionController : MonoBehaviour
 
     public void SetNextDecision(DecisionData decision)
     {
-        Debug.Log("SetNextDecision " + decision);
 
         currentDecision = decision;
         timeRemaining = timeBase;
@@ -151,16 +150,11 @@ public class DecisionController : MonoBehaviour
         {
             if (InEventQueue > 0 && !inEventMode)
             {
-                Debug.Log("ARRANCAR PERO DECISION QUE ES CERO");
-
                 Continue();
             }
             else
             {
 
-
-
-                Debug.Log("No decisions queued to start.");
                 return;
             }
         }
@@ -169,7 +163,6 @@ public class DecisionController : MonoBehaviour
         SetNextDecision(decisionToStart);
         InEventQueue--;
 
-        Debug.Log("StartDecision - "+ decisionToStart);
         zoom.SetActive(true);
 
         //DecisionService.Instance.ShowDecisionUI(currentDecision);

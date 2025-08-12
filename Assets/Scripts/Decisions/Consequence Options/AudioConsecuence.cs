@@ -6,8 +6,9 @@ public class AudioConsecuence : ConsequenceData
     public AudioClip sound;
     public float volume = 1f;
     public bool loop = false;
+    public float speed = 1f;
     public override void Execute()
     {
-        EventManager.Instance.OnPlaySFX(sound, volume, loop);
+        EventManager.Instance.OnPlaySFX(sound, volume, loop, speed);
     }
 }

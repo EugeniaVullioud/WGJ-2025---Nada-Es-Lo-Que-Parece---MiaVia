@@ -62,7 +62,6 @@ public class CanvasManager : MonoBehaviour
             {
                 LoseText = "TE MORISTE DE LA VERGUENZA";
             }
-            Debug.Log(LoseText);
             ShowMenu(MenuType.LoseMenu); });
 
         EventManager.Instance.OnMainMenuChosen();

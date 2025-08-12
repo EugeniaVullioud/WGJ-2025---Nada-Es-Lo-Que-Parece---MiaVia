@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,10 +15,12 @@ public class MovementManager : MonoBehaviour
     float time;
 
     private float _periodicTimer = 0f;
+    private bool start = true;
 
     private void Start()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { Pause(); });
+        EventBus.Subscribe<MenuChosen>((e) => { if (MenuType.MainMenu == e.Menu) start = true; });
         EventBus.Subscribe<LostGame>((e) => {
             modifier = periodicEventIntervalModifier;
             time = periodicEventInterval; Pause(); });
@@ -27,12 +30,16 @@ public class MovementManager : MonoBehaviour
         EventBus.Subscribe<FinishDecisionMaking>((e) => { Resume(); });
         EventBus.Subscribe<PlayAgain>((e) => {
             modifier = periodicEventIntervalModifier;
-            time = periodicEventInterval; Resume(); });
+            Resume(); 
+            if (start) { 
+                time = 1; start = false; }
+            else { time = periodicEventInterval; } 
+        
+        });
         EventBus.Subscribe<OnCorrectlyAnswered>((e) => { if (time < 1) return;
             if (e.WasCorrect) 
             { time -= 0.2f; } 
             else { time -= 0.4f; }; });
-
 
         _isPaused = true;
     }
@@ -104,7 +111,7 @@ public class MovementManager : MonoBehaviour
 
              if (_periodicTimer >= time)
             {
-
+                if (!start) time = periodicEventInterval;
                 _periodicTimer = 0f;
                 _preparedNext = false;
                 EventManager.Instance.OnSpawnNextDecision();

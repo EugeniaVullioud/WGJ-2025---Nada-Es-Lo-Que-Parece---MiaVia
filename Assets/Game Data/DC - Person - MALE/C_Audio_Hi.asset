@@ -15,3 +15,4 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: e966fc946988f1743b8843487089c7ca, type: 3}
   volume: 1
   loop: 0
+  speed: 2

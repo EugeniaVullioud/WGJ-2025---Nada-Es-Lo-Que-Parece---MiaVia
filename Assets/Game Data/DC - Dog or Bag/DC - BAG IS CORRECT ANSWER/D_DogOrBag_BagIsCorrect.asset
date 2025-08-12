@@ -33,8 +33,8 @@ MonoBehaviour:
     consequences:
     - {fileID: 11400000, guid: 9e848db4a19a4d84aa25be4f270db3c3, type: 2}
     - {fileID: 11400000, guid: d6f9e003a9b87444fb6c512cd3367fb6, type: 2}
-    - {fileID: 11400000, guid: ff34862ae525fac419ef68dd736454e5, type: 2}
     - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+    - {fileID: 11400000, guid: d307a4f6a6162f3498f45dde9926c1f2, type: 2}
   onZoom: {fileID: 3288061584624765323, guid: 56424928dcf5f4b438df8f9bd5251246, type: 3}
   compare: {fileID: 0}
   prefab: {fileID: 2959375735969258266, guid: 22a241d28251e2e48b32dff7c9770c33, type: 3}

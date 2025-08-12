@@ -9,32 +9,16 @@ public class DecisionTrigger : MonoBehaviour
     public LayerMask triggeringLayers;
 
     private bool hasTriggered = false;
-    private void OnEnable()
-    {
-       // Debug.Log("set decision");
 
-        //EventManager.Instance.OnSetNextDecision(decisionToTrigger);
-
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (hasTriggered) return;
 
         // Check if the other object's layer is in the triggeringLayers mask
         if (((1 << other.gameObject.layer) & triggeringLayers) != 0)
-        {
-            
+        {            
             hasTriggered = true;
-            //DecisionService.Instance.StartDecision(decisionToTrigger);
-
-            Debug.Log("In trigger area will queue " + decisionToTrigger);
-
-            DecisionController.InEventQueue++;
-                
-            
-            //EventManager.Instance.OnEnterDecisionMaking();
-            
-           
+            DecisionController.InEventQueue++;               
         }
     }
 

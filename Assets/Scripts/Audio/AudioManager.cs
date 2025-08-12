@@ -35,13 +35,13 @@ public class AudioManager : MonoBehaviour
         EventBus.Subscribe<SetMasterVolume>((e) => { SetVolumeParameters(volumeParam1, e.Volume); lastMasterVolume = e.Volume; });
         EventBus.Subscribe<SetMusicVolume>((e) => SetVolumeParameters(volumeParam2, e.Volume));
         EventBus.Subscribe<SetSFXVolume>((e) => SetVolumeParameters(volumeParam3, e.Volume));
-        EventBus.Subscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop));
+        EventBus.Subscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop, ev.Speed));
         EventBus.Subscribe<ToggleMuteMaster>((ev) => ToggleMute(volumeParam1,ev.Mute));
         EventBus.Subscribe<ToggleMuteMusic>((ev) => ToggleMute(volumeParam2,ev.Mute));
     }
     private void OnDisable()
     {
-        EventBus.Unsubscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop));
+        EventBus.Unsubscribe<PlaySFX>((ev) => PlaySound(ev.SFX, ev.Volume, ev.Loop, ev.Speed));
 
     }
     void Awake()
@@ -66,9 +66,12 @@ public class AudioManager : MonoBehaviour
         return Mathf.Log10(linear) * 20f;
     }
 
-    public void PlaySound(AudioClip clip, float volume = 1f, bool loop = false)
+    public void PlaySound(AudioClip clip, float volume = 1f, bool loop = false, float speed = 1)
     {
         AudioSource source = audioSourcePool.Get();
+        source.Stop();
+
+        source.pitch = speed;
         source.clip = clip;
         source.volume = volume;
         source.loop = loop;
@@ -102,7 +105,7 @@ public class AudioManager : MonoBehaviour
     {
         if (newClip == null)
         {
-            Debug.LogWarning("Trying to play a null music clip.");
+            //Debug.LogWarning("Trying to play a null music clip.");
             return;
         }
 

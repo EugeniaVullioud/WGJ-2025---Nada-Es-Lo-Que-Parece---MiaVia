@@ -96,7 +96,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
         if (next == null)
         {
-            Debug.Log("No functional prefabs assigned.");
+            //Debug.Log("No functional prefabs assigned.");
             return;
         }
         _functionalQueue.Enqueue(new SpawnablePrefab() { prefab = next.prefab, isFunctional = true, id = next.decisionId });
@@ -257,8 +257,6 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                     queued = false;
                     if (!_pools.ContainsKey(prefab.prefab))
                     {
-                        Debug.Log("FunctionalLoop no estaba en el diccionario ");
-
                         var pool = new ComponentPool<MovingFadingObject>(prefab.prefab, poolSizePerPrefab, transform);
                         _pools[prefab.prefab] = pool;
                     }
@@ -273,8 +271,6 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
                     if (!_pools.ContainsKey(prefab.prefab))
                     {
-                        Debug.Log("FunctionalLoop no estaba en el diccionario ");
-
                         var pool = new ComponentPool<MovingFadingObject>(prefab.prefab, poolSizePerPrefab, transform);
                         _pools[prefab.prefab] = pool;
                     }
@@ -346,7 +342,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     {
         if (_functionalCoroutine != null)
         {
-            Debug.Log("pause spawning");
+            //Debug.Log("pause spawning");
 
             StopCoroutine(_functionalCoroutine);
             _spawnCoroutines.Remove(_functionalCoroutine);
@@ -358,7 +354,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
         if (_functionalCoroutine == null)
         {
-            Debug.Log("resume spawning");
+           // Debug.Log("resume spawning");
 
             _functionalCoroutine = StartCoroutine(FunctionalLoop());
             _spawnCoroutines.Add(_functionalCoroutine);
@@ -459,7 +455,6 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 {
                     var prefab = _functionalQueue.Dequeue();
 
-                    Debug.Log("QUEUED FunctionalLoop " + prefab.id);
                     queued = false;
                     SpawnFromPrefab(prefab, -1);
                     _lastFunctionalSpawnTime[-1] = now;
@@ -468,7 +463,6 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 else if (canSpawnRight)
                 {
                     var prefab = _functionalQueue.Dequeue();
-                    Debug.Log("QUEUED FunctionalLoop " + prefab.id);
                     queued = false;
                     SpawnFromPrefab(prefab, 1);
                     _lastFunctionalSpawnTime[1] = now;

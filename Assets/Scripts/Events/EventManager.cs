@@ -148,8 +148,8 @@ public class EventManager : MonoBehaviour
     public void OnUnMuteMusic()
       => GenerateEvent<ToggleMuteMusic>((ref ToggleMuteMusic e) => e.Set(false));
 
-    public void OnPlaySFX(AudioClip sound, float volume, bool loop)
-        => GenerateEvent<PlaySFX>((ref PlaySFX e) => e.Set(sound, volume, loop));
+    public void OnPlaySFX(AudioClip sound, float volume, bool loop, float speed)
+        => GenerateEvent<PlaySFX>((ref PlaySFX e) => e.Set(sound, volume, loop, speed));
 
     public void OnSetMasterVolume(float volume)
         => GenerateEvent<SetMasterVolume>((ref SetMasterVolume e) => e.Set(volume));

@@ -1713,14 +1713,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f72dd33595bf0644b819acfda5fda38c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 261d1725506cab749839217db1443ec4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5006,7 +5006,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ...........................................
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8454,7 +8454,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 1806576175}
   loadingTextGroup: {fileID: 1561868142}
   startButton: {fileID: 2065227544}
-  minLoadingTime: 2
+  minLoadingTime: 6
 --- !u!1 &1100144046
 GameObject:
   m_ObjectHideFlags: 0
@@ -10703,7 +10703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd7b80bde566b3148bd1cdd52033f213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  periodicEventInterval: 4
+  periodicEventInterval: 2.5
   periodicEventIntervalModifier: 1
 --- !u!1 &1402349387
 GameObject:
@@ -14100,7 +14100,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806576173}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 730f465e5e4d29b458372ec55c1cbbff, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: de611b4338b08ce46a7d79a3e4133cc8, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 963194227}
@@ -14111,7 +14111,7 @@ VideoPlayer:
   m_RenderMode: 1
   m_AspectRatio: 2
   m_DataSource: 0
-  m_TimeUpdateMode: 2
+  m_TimeUpdateMode: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -15004,7 +15004,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CREDITOS
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16128,7 +16128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textGroup: {fileID: 479599665}
   buttonsGroup: {fileID: 781831043}
-  textFadeDuration: 1
+  textFadeDuration: 0.1
   buttonsFadeDuration: 1
 --- !u!1 &2020223741
 GameObject:

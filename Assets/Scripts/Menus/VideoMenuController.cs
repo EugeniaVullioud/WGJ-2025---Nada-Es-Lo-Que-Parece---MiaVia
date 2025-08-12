@@ -20,6 +20,9 @@ public class VideoMenuController : MonoBehaviour, IMenuController
     private void Start()
     {
         EventBus.Subscribe<VisualsReady>((ready) => { _readyToPlay = ready.Ready; });
+
+        startButton.onClick.AddListener(() => { videoPlayer.Stop(); StopCoroutine(videoRoutine); });
+
     }
     public void OnEnableMenu()
     {
@@ -31,8 +34,7 @@ public class VideoMenuController : MonoBehaviour, IMenuController
         EventManager.Instance.OnVisualsReady(true);
         _readyToPlay = true;
 
-        if (videoRoutine != null)
-            StopCoroutine(videoRoutine);
+        if (videoRoutine != null)  StopCoroutine(videoRoutine);
         videoRoutine = StartCoroutine(PlayVideoAndWaitRoutine());
 
 
@@ -54,24 +56,18 @@ public class VideoMenuController : MonoBehaviour, IMenuController
         // Wait for video to finish
 
         float l = (float)videoPlayer.length;
-        yield return new WaitForSeconds(l);
+        yield return new WaitForSeconds(minLoadingTime);
 
-        float timer = 0f;
 
-        loadingTextGroup.alpha = 1f;
+        startButton.gameObject.SetActive(true);
+        startButton.interactable = true;
 
-        // Show loading text at least minLoadingTime seconds
-        while (timer < minLoadingTime || !_readyToPlay)
-        {
-            timer += Time.deltaTime;
-           
-            yield return null;
-        }
+        yield return new WaitForSeconds(l- minLoadingTime -0.5f);
 
-        // Hide loading text, show start button
-        StartCoroutine(FadeOutCanvasGroup(loadingTextGroup, 0.5f));
-      
+        startButton.onClick.Invoke();
     }
+
+
 
     private IEnumerator FadeOutCanvasGroup(CanvasGroup cg, float duration)
     {

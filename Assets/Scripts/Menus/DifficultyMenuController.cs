@@ -37,7 +37,7 @@ public class DifficultyMenuController : MonoBehaviour, IMenuController
         }
 
         otherButtonGroup.alpha = 0f;
-
+        otherButtonGroup.interactable = false;
         fadeRoutine = StartCoroutine(FadeSequenceRoutine());
     }
 
@@ -59,6 +59,7 @@ public class DifficultyMenuController : MonoBehaviour, IMenuController
         }
 
         yield return FadeCanvasGroup(otherButtonGroup, backButtonFadeDuration);
+        otherButtonGroup.interactable = true;
         otherButtonGroup.GetComponentInChildren<Selectable>().interactable = true;
     }
 

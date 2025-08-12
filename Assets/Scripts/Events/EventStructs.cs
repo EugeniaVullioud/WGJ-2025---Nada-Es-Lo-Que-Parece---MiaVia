@@ -171,12 +171,12 @@ public struct PlaySFX
     public AudioClip SFX;
     public float Volume;
     public bool Loop;
+    public float Speed;
+    public PlaySFX(AudioClip sfx, float volume = 1f, bool loop = false, float speed =1)
+        => (this.SFX, this.Volume, this.Loop, this.Speed) = (sfx, volume, loop, speed);
 
-    public PlaySFX(AudioClip sfx, float volume = 1f, bool loop = false)
-        => (this.SFX, this.Volume, this.Loop) = (sfx, volume, loop);
-
-    public void Set(AudioClip sfx, float volume = 1f, bool loop = false)
-        => (this.SFX, this.Volume, this.Loop) = (sfx, volume, loop);
+    public void Set(AudioClip sfx, float volume = 1f, bool loop = false, float speed = 1)
+        => (this.SFX, this.Volume, this.Loop, this.Speed) = (sfx, volume, loop, speed);
 }
 
 [System.Serializable]

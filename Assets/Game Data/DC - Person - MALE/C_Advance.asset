@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592f12f20cca0e643a9a2c9076ea1700, type: 3}
   m_Name: C_Advance
   m_EditorClassIdentifier: 
-  amount: 10
+  amount: 7

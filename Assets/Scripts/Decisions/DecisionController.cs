@@ -86,16 +86,25 @@ public class DecisionController : MonoBehaviour
     }
 
     Camera _cam;
-    void PlaceInCenter(Transform t)
+    void PlaceInCenter(Transform t, float offsetPercentage)
     {
-        // Get the screen center position (middle of the screen)
-        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, zoomDistance);
+        // Get object's height from its Renderer bounds
+        Renderer r = t.GetComponentInChildren<Renderer>();
+        float objectHeight = r != null ? r.bounds.size.y : 0f;
 
-        // Convert screen center position to world space using the camera
-        Vector3 worldPosition = _cam.ScreenToWorldPoint(screenCenter);
+        Debug.Log(objectHeight);
+        // We want to offset so the object appears centered by height
+        float heightOffset = objectHeight * offsetPercentage;
 
-        // Set the object's position to that world position
-        t.position = worldPosition;
+        // The point we project is adjusted backwards by that height in local space
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, zoomDistance);
+
+        // Convert to world space
+        Vector3 worldCenter = _cam.ScreenToWorldPoint(screenCenter);
+
+        // Move the object so its center is at that world position
+        // But we subtract the offset upward so taller objects still center visually
+        t.position = worldCenter - Vector3.up * heightOffset;
     }
 
     public void OnPlayerLose()
@@ -124,7 +133,7 @@ public class DecisionController : MonoBehaviour
     
        zoom.transform.rotation = Quaternion.Euler(90, 180, 0);
 
-        PlaceInCenter(zoom.transform);
+        PlaceInCenter(zoom.transform, decision.verticalOffsetPercentage);
 
         zoom.SetActive(false);
 

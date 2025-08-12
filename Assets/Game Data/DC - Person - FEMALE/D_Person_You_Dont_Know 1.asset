@@ -38,3 +38,4 @@ MonoBehaviour:
   onZoom: {fileID: 4436836694783594611, guid: 6ba0dd29fa164e04c9828014e15825ee, type: 3}
   compare: {fileID: 2002091412590021148, guid: dd66be7e64c80fb48a211c1d8876f797, type: 3}
   prefab: {fileID: 757390778897563120, guid: 2665123dda969534789bca7e14c11e91, type: 3}
+  verticalOffsetPercentage: 0.25

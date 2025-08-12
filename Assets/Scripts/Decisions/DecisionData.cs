@@ -28,4 +28,7 @@ public class DecisionData : ScriptableObject
 
     [Tooltip("Prefab")]
     public MovingFadingObject prefab;
+
+    [Tooltip("Display")]
+    public float verticalOffsetPercentage = 0;
 }

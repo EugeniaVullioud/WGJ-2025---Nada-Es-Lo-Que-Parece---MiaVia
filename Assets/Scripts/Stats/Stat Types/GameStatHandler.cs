@@ -18,7 +18,7 @@ public class GameStatHandler : MonoBehaviour
     private void Start()
     {
         // Create stats
-        var shameStat = new Stat<float>("Shame", 100f,EventManager.Instance.OnLost, 0f);
+        var shameStat = new Stat<float>("Shame", 100f, () => { }, 0f);
         var distanceStat = new Stat<float>("Distance", 100f, () => { } ,0f);
         var decisionsStat = new Stat<float>("Decisions", 100f, () => { }, 0f);
 

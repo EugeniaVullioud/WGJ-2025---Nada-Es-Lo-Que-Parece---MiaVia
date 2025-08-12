@@ -13,6 +13,7 @@ public class DistanceBarVisual : MonoBehaviour
     public float moveDuration = 3f; // Time it takes to move from left to right
     public float startOffset = 0f; // Optional offset to start from (can be adjusted in the inspector)
     public float endOffset = 0f; // Optional offset to start from (can be adjusted in the inspector)
+    public CanvasGroup _cg;
 
     [SerializeField] private float fillSpeed = 2f;
 
@@ -64,9 +65,15 @@ public class DistanceBarVisual : MonoBehaviour
             progress = 0;
             target = 0;
             mod = -1;
+            _cg.alpha = 1;
             _distanceStatHandler.ResetStats();
             StopAllCoroutines();
             targetRectTransform.anchoredPosition = Vector2.Lerp(startPosition, endPosition, 0);
+        });
+        EventBus.Subscribe<MenuChosen>((stat) =>
+        {
+            if (stat.Menu == MenuType.InGameMenu || stat.Menu == MenuType.DecisionMenu) _cg.alpha = 1;
+            else _cg.alpha = 0;
         });
     }
 
@@ -157,7 +164,7 @@ public class DistanceBarVisual : MonoBehaviour
         {
             return;
         }
-        Debug.Log("stat " + _distanceStatHandler.Current);
+        Debug.Log("stat distance" + _distanceStatHandler.Current);
         mod = -1;
         animate = StartCoroutine(FillRoutine(handler, Mathf.Clamp01(target)));
     }

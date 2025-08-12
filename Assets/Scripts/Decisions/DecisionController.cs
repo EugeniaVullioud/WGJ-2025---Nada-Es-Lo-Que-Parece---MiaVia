@@ -10,6 +10,9 @@ public class DecisionController : MonoBehaviour
     private bool _playerLost = false;
     private bool _playerWon = false;
 
+    public static int InEventQueue = 0;
+    public bool inEventMode = false;
+
     [Header("Starting Point")]
     [SerializeField] private DecisionSequenceGenerator _sequenceGenerator;
 
@@ -56,8 +59,9 @@ public class DecisionController : MonoBehaviour
         EventBus.Subscribe<TriggerNextDecision>((_) => { Continue(); });
         EventBus.Subscribe<SetNextDecision>((e) => { SetNextDecision(e.NextDecision); });
         
-        EventBus.Subscribe<PlayAgain>((e) => { ResetController(); _playerLost = false; _playerWon = false; });
-        EventBus.Subscribe<LostGame>((e) => { OnPlayerLose(); });
+        EventBus.Subscribe<PlayAgain>((e) => { ResetController(); _playerLost = false; _playerWon = false; inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
+        EventBus.Subscribe<LostGame>((e) => { OnPlayerLose(); _playerWon = false;  inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
+        EventBus.Subscribe<WonGame>((e) => { _playerWon = true;  inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
         EventBus.Subscribe<OnCorrectlyAnswered>((e) => { if (e.WasCorrect) CorrectlyAnswered(); else IncorrectlyAnswered(); });
 
         _sequenceGenerator.GenerateSequence();
@@ -69,6 +73,7 @@ public class DecisionController : MonoBehaviour
 
     private void ResetController()
     {
+        InEventQueue = 0;
         timeBase = _initialTime;
     }
     void CorrectlyAnswered()
@@ -98,6 +103,9 @@ public class DecisionController : MonoBehaviour
         _playerLost = true;
     }
     private Dictionary<string, GameObjectPool> _pools = new();
+
+    private Queue<DecisionData> _decisionQueue = new Queue<DecisionData>();
+
 
     public void SetNextDecision(DecisionData decision)
     {
@@ -138,7 +146,30 @@ public class DecisionController : MonoBehaviour
     public void StartDecision()
     {
         if (_playerLost) return;
-        Debug.Log("StartDecision");
+
+        if (_decisionQueue.Count == 0)
+        {
+            if (InEventQueue > 0 && !inEventMode)
+            {
+                Debug.Log("ARRANCAR PERO DECISION QUE ES CERO");
+
+                Continue();
+            }
+            else
+            {
+
+
+
+                Debug.Log("No decisions queued to start.");
+                return;
+            }
+        }
+        inEventMode = true;
+        var decisionToStart = _decisionQueue.Dequeue();
+        SetNextDecision(decisionToStart);
+        InEventQueue--;
+
+        Debug.Log("StartDecision - "+ decisionToStart);
         zoom.SetActive(true);
 
         //DecisionService.Instance.ShowDecisionUI(currentDecision);
@@ -188,6 +219,7 @@ public class DecisionController : MonoBehaviour
         EventManager.Instance.OnFinishDecisionMaking();
 
         yield return null;
+
         OnTimeExpired();
     }
 
@@ -206,16 +238,20 @@ public class DecisionController : MonoBehaviour
 
         EventManager.Instance.OnFinishDecisionMaking();
         ConsequenceRunner.Execute(choice.consequences);
-
+        inEventMode = false;
         Invoke("Continue", 0.2f);
     }
     void Continue()
     {
-        if (_playerLost) return;
-        Debug.Log("Continue");
+        if (_playerLost || _playerWon) return;
 
         var nextDecision = _sequenceGenerator.GetNextDecision();
-        SetNextDecision(nextDecision);
+
+        EventManager.Instance.OnQueueNext(nextDecision);
+
+
+        _decisionQueue.Enqueue(nextDecision); // Store for later
+
     }
     private void OnTimeExpired()
     {
@@ -229,11 +265,18 @@ public class DecisionController : MonoBehaviour
 
         // Could execute a default choice 
         ConsequenceRunner.Execute(currentDecision.defaultChoice.consequences);
-
+        inEventMode = false;
         if (!_playerLost)Invoke("Continue", 0.2f);
 
     }
+    private void Update()
+    {
+        if (InEventQueue > 0 && !inEventMode)
+        {
 
+            EventManager.Instance.OnEnterDecisionMaking();
+        }
+    }
 
     #region Match UI
     private void UpdateUIText(string message)

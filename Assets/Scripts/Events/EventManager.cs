@@ -68,15 +68,16 @@ public class EventManager : MonoBehaviour
     #region Decisions
     public void OnSetNextDecision(DecisionData amount)
         => GenerateEvent<SetNextDecision>((ref SetNextDecision e) => e.Set(amount));
-
+    public void OnQueueNext(DecisionData d)
+     => GenerateEvent<QueueNextDecision>((ref QueueNextDecision e) => e.Set(d));
     public void OnSpawnNextDecision()
        => GenerateEvent<SpawnNextDecision>((ref SpawnNextDecision e) => { });
     public void OnTriggerNextDecision()
         => GenerateEvent<TriggerNextDecision>((ref TriggerNextDecision e) => { });
-
+    public void OnCheckPendingSpawn()
+      => GenerateEvent<CheckPendingSpawn>((ref CheckPendingSpawn e) => { });
     public void OnFinishDecisionMaking()
        => GenerateEvent<FinishDecisionMaking>((ref FinishDecisionMaking e) => { });
-
     public void OnEnterDecisionMaking()
      => GenerateEvent<EnterDecisionMakingState>((ref EnterDecisionMakingState e) => { });
     #endregion
@@ -128,8 +129,8 @@ public class EventManager : MonoBehaviour
     public void OnPlayAgain()
         => GenerateEvent<PlayAgain>((ref PlayAgain e) => { });
 
-    public void OnLost()
-        => GenerateEvent<LostGame>((ref LostGame e)  => { });
+    public void OnLost(bool wrongStreet)
+        => GenerateEvent<LostGame>((ref LostGame e) => e.Set(wrongStreet));
     #endregion
 
 

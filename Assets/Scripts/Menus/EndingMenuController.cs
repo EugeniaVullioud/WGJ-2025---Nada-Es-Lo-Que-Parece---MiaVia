@@ -20,6 +20,7 @@ public class EndingMenuController : FadeInMenuBase
 
     public override void OnEnableMenu()
     {
+        Debug.Log("GANOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         gameObject.SetActive(true);
         buttonsGroup.gameObject.SetActive(false);
         buttonsGroup.alpha = 0f;

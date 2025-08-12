@@ -20,7 +20,11 @@ public class DecisionService : MonoBehaviour
     {
         group.alpha = 0;
         group.interactable = false;
-    }
+
+        EventBus.Subscribe<PlayAgain>((stat) => { interruptUI = true; });
+        EventBus.Subscribe<WonGame>((stat) => { interruptUI = true; });
+        EventBus.Subscribe<PlayAgain>((stat) => { interruptUI = false; });
+        }
     public void ShowDecisionUI(DecisionData decision) 
     { 
         /* update UI */
@@ -29,8 +33,16 @@ public class DecisionService : MonoBehaviour
     {
         EventManager.Instance.OnModifyDecisionTimerStat(timeRemaining);
     }
+    bool interruptUI = false;
     public void ShowMessage(string message) 
     {
+        if (interruptUI)
+        {
+            StopAllCoroutines();
+            group.alpha = 0;
+            group.interactable = false;
+            return;
+        }
         _text.text = message;
 
         //animate appear

@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class ShameBarVisual : MonoBehaviour
 {
@@ -14,7 +11,9 @@ public class ShameBarVisual : MonoBehaviour
     [SerializeField] private float shakeDuration = 1f;
     [SerializeField] private Image _shake;
 
+    public CanvasGroup _cg;
     Quaternion originalRot;
+    private float _targetFill;   // 0 to 1
 
     private float _currentFill = 0f; // 0 to 1
     private float _lastCheck = -1f;
@@ -39,22 +38,34 @@ public class ShameBarVisual : MonoBehaviour
     {
         originalRot = _shake.transform.localRotation;
     }
+
     private void Start()
     {
-        var shameStat = new Stat<float>("Shame", 100f, EventManager.Instance.OnLost, 0f);
+        var shameStat = new Stat<float>("Shame", 100f, () => { EventManager.Instance.OnLost(false); } , 0f);
         _shameStatHandler = new ProgressBarStatHandler(shameStat, _shameSlider);
         _shameStatHandler.UpdateProgressBars();
 
         EventBus.Subscribe<ModifyShameStat>((stat) => Modify(stat.Amount));
-        EventBus.Subscribe<PlayAgain>((stat) => { _shameStatHandler.ResetStats(); UpdateFill(0); });
+        EventBus.Subscribe<PlayAgain>((stat) => { _shameStatHandler.ResetStats(); _currentFill = 0; _targetFill = 0; UpdateFill(0); _cg.alpha = 1; });
         EventBus.Subscribe<WonGame>((stat) => {
+            _currentFill = 0; _targetFill = 0;
             _shameStatHandler.ResetStats(); UpdateFill(0);
-            StopAllCoroutines();
+            StopCoroutine(shake);
+            _shake.transform.localRotation = originalRot;
         });
         EventBus.Subscribe<LostGame>((stat) => {
+            _currentFill = 0; _targetFill = 0;
             _shameStatHandler.ResetStats(); UpdateFill(0);
-            StopAllCoroutines();
+            StopCoroutine(shake);
+            _shake.transform.localRotation = originalRot;
+
         });
+        EventBus.Subscribe<MenuChosen>((stat) =>
+        {
+            if (stat.Menu == MenuType.InGameMenu || stat.Menu == MenuType.DecisionMenu) _cg.alpha = 1;
+            else _cg.alpha = 0;
+        });
+            StartCoroutine(FillUpdater());
 
     }
 
@@ -71,20 +82,34 @@ public class ShameBarVisual : MonoBehaviour
             StopAllCoroutines();
         });
     }
+    private IEnumerator FillUpdater()
+    {
+        while (true)
+        {
+            if (!Mathf.Approximately(_currentFill, _targetFill))
+            {
+                _currentFill = Mathf.MoveTowards(_currentFill, _targetFill, fillSpeed * Time.deltaTime);
+
+                for (int i = 0; i < _shameSlider.Length; i++)
+                    _shameSlider[i].fillAmount = _currentFill;
+
+                UpdateFill(_currentFill); // fire events when crossing thresholds
+            }
+
+            yield return null;
+        }
+    }
+
     void Modify(float amount)
     {
         _shameStatHandler.ModifyStat(amount);
-        UpdateFill(_shameStatHandler.Current);
-        AnimateFillTo(_shameStatHandler, amount);
-        if (amount > 0) Shake(shakeDuration, shakeStrenght);
+        _targetFill = Mathf.Clamp01(_shameStatHandler.Current);
+
+        if (amount > 0)
+            Shake(shakeDuration, shakeStrenght);
     }
     Coroutine animate;
 
-    public void AnimateFillTo( ProgressBarStatHandler handler, float target)
-    {
-        if (animate != null) StopCoroutine(animate);
-        animate = StartCoroutine(FillRoutine( handler, Mathf.Clamp01(target)));
-    }
 
     private IEnumerator FillRoutine( ProgressBarStatHandler handler, float target)
     {
@@ -124,21 +149,4 @@ public class ShameBarVisual : MonoBehaviour
         transform.localRotation = originalRot;
     }
 
-
-    private void Update()
-    {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
-        {
-            EventManager.Instance. OnModifyShameStat(10);
-
-        }
-        if (Keyboard.current.digit2Key.wasPressedThisFrame)
-        {
-            EventManager.Instance.OnModifyShameStat(-5);
-
-        }
-        if (Keyboard.current.digit3Key.wasPressedThisFrame)
-            EventManager.Instance.OnEndingMenuChosen();
-
-    }
 }

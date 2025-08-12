@@ -2671,6 +2671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254c06f1150dc7c4c8dfea6250034c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inEventMode: 0
   _sequenceGenerator: {fileID: 367667358}
   _initialTime: 5
   _correctTimeLose: 0.25
@@ -3151,8 +3152,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -907}
-  m_SizeDelta: {x: 1062, y: 180}
+  m_AnchoredPosition: {x: 0, y: -874}
+  m_SizeDelta: {x: 1062, y: 160.4}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &414428997
 MonoBehaviour:
@@ -3205,7 +3206,7 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 30
+  m_fontSizeMin: 20
   m_fontSizeMax: 70
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -6159,9 +6160,9 @@ MonoBehaviour:
     descriptionGroup: {fileID: 1911780073}
     toggle: {fileID: 2066320018}
   otherButtonGroup: {fileID: 365785909}
-  buttonFadeDuration: 0.5
-  descriptionFadeDuration: 0.5
-  backButtonFadeDuration: 1
+  buttonFadeDuration: 0.2
+  descriptionFadeDuration: 0.2
+  backButtonFadeDuration: 0.5
 --- !u!1 &757330336
 GameObject:
   m_ObjectHideFlags: 0
@@ -6871,7 +6872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundGroup: {fileID: 1108231793}
   buttonsGroup: {fileID: 54851099}
-  fadeDuration: 0.75
+  fadeDuration: 0.4
 --- !u!1 &857752718
 GameObject:
   m_ObjectHideFlags: 0
@@ -7270,14 +7271,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956111204}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 481799474}
   - {fileID: 545121798}
-  m_Father: {fileID: 1144522619}
+  m_Father: {fileID: 1223698181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7577,9 +7578,10 @@ MonoBehaviour:
   imagesGroup: {fileID: 2050718721}
   textGroup: {fileID: 1527289488}
   buttonsGroup: {fileID: 674199117}
-  imagesFadeDuration: 1
-  textFadeDuration: 1
-  buttonsFadeDuration: 1
+  imagesFadeDuration: 0.2
+  textFadeDuration: 0.5
+  buttonsFadeDuration: 0.8
+  _text: {fileID: 1785802959}
 --- !u!1 &990411770
 GameObject:
   m_ObjectHideFlags: 0
@@ -8260,8 +8262,8 @@ MonoBehaviour:
   - {fileID: 1444103900}
   - {fileID: 2032622646}
   buttonsGroup: {fileID: 378982567}
-  textFadeDuration: 0.6
-  buttonsFadeDuration: 1
+  textFadeDuration: 0.4
+  buttonsFadeDuration: 0.6
 --- !u!1 &1054997549
 GameObject:
   m_ObjectHideFlags: 0
@@ -8487,7 +8489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -970}
+  m_AnchoredPosition: {x: 0, y: -909}
   m_SizeDelta: {x: 1920, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1100144048
@@ -8918,7 +8920,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 956111205}
   - {fileID: 1470833369}
   m_Father: {fileID: 1223698181}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9123,7 +9124,7 @@ RectTransform:
   m_GameObject: {fileID: 1175384489}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8624917, y: 0.8624917, z: 0.8624917}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1428148324}
@@ -9133,7 +9134,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -897, y: 0}
+  m_AnchoredPosition: {x: -897, y: -25}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1192642255
@@ -9366,6 +9367,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 956111205}
   - {fileID: 1150284739}
   - {fileID: 1144522619}
   - {fileID: 1683873715}
@@ -12576,6 +12578,7 @@ MonoBehaviour:
   howToPlayMenu: {fileID: 1038065403}
   difficultyMenu: {fileID: 741148090}
   loseMenu: {fileID: 990339309}
+  LoseText: TE MORISTE DE LA VERGUENZA
 --- !u!4 &1602853838
 Transform:
   m_ObjectHideFlags: 0
@@ -13646,8 +13649,8 @@ Transform:
   m_GameObject: {fileID: 1735032016}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50}
-  m_LocalScale: {x: 100, y: 50, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 62.6}
+  m_LocalScale: {x: 100, y: 50, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -17238,6 +17241,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5157844703286986548, guid: 98e1048df262b84458d9eda1e3f7dd06, type: 3}
+      propertyPath: _cg
+      value: 
+      objectReference: {fileID: 956111206}
     - target: {fileID: 5829277059873806948, guid: 98e1048df262b84458d9eda1e3f7dd06, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -17347,6 +17354,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 956111205}
     m_Modifications:
+    - target: {fileID: 1512011224189875995, guid: 98a64ec40f05d6645b6d8ed99b0b6d4d, type: 3}
+      propertyPath: _cg
+      value: 
+      objectReference: {fileID: 956111206}
     - target: {fileID: 1886411590484243732, guid: 98a64ec40f05d6645b6d8ed99b0b6d4d, type: 3}
       propertyPath: m_RaycastTarget
       value: 0

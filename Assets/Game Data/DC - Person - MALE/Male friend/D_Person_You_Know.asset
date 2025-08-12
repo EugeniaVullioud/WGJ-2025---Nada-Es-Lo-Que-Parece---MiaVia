@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1da31ca557526b4cbbc66f595a12225, type: 3}
   m_Name: D_Person_You_Know
   m_EditorClassIdentifier: 
-  decisionId: DESC
+  decisionId: MALEFRNOT
   prompt: Se parece mucho a Marco De Ojo
   timeLimitSeconds: 5
   choices:

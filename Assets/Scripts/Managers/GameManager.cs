@@ -27,18 +27,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator InitializeVisualsRoutine()
     {
         // Simulate some async visual init work here:
-        Debug.Log("Initializing game visuals...");
         yield return new WaitForSeconds(5f); // Simulate delay
 
         visualsReady = true;
-        Debug.Log("Visuals initialized.");
 
         EventManager.Instance.OnVisualsReady(visualsReady);
     }
 
     public void ExitGame()
     {
-        Debug.Log("Exit requested");
         // Depending on platform:
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -49,6 +46,6 @@ public class GameManager : MonoBehaviour
 
     void LostGame()
     {
-        EventManager.Instance.OnLost();
+        EventManager.Instance.OnLost(false);
     }
 }

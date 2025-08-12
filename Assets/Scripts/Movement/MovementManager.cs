@@ -40,6 +40,8 @@ public class MovementManager : MonoBehaviour
     {
         if (!_isPaused)
         {
+            _ensureStack = false;
+
             _isPaused = true;
         }
     }
@@ -48,12 +50,22 @@ public class MovementManager : MonoBehaviour
     {
         if (_isPaused)
         {
-            Debug.Log(" despausa");
+            //Debug.Log(" despausa");
            
 
             _periodicTimer = 0f;
             _isPaused = false;
-            //EventManager.Instance.OnFinishDecisionMaking();
+
+            if (!_ensureStack)
+            {
+                _ensureStack = true;
+                EventManager.Instance.OnCheckPendingSpawn();
+                //Debug.Log(" despausa OnSpawnNextDecision");
+
+                EventManager.Instance.OnSpawnNextDecision();
+            }
+           
+
         }
     }
 
@@ -65,20 +77,36 @@ public class MovementManager : MonoBehaviour
 
     public float GetCurrentSpeed() => _currentSpeed;
 
+    bool _preparedNext = false;
+    bool _ensureStack = false;
     private void Update()
     {
+        if (_isPaused && !_ensureStack)
+        {
+            
+                //Debug.Log(" _ensureStack deberia triggerear el spawn");
+
+                _periodicTimer = 0f;
+                EventManager.Instance.OnSpawnNextDecision();
+                _ensureStack = true;
+
+        }
 
         // Only run periodic event if not paused
         if (!_isPaused)
         {
             _periodicTimer += Time.deltaTime;
-            if (_periodicTimer > 0 && _periodicTimer < 0.4f) EventManager.Instance.OnTriggerNextDecision();
+            if (_periodicTimer > 0 && _periodicTimer < 0.4f && !_preparedNext)
+            {
+                _preparedNext=true;
+                EventManager.Instance.OnTriggerNextDecision();
+            }
 
              if (_periodicTimer >= time)
             {
-                Debug.Log(" deberia triggerear el spawn");
 
                 _periodicTimer = 0f;
+                _preparedNext = false;
                 EventManager.Instance.OnSpawnNextDecision();
 
             }

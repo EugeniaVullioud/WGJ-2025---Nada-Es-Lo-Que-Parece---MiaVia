@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a06ce03df5a9c4198c0c8b5d58e15f, type: 3}
   m_Name: C_Shame_Incorrect
   m_EditorClassIdentifier: 
-  amount: -5
+  amount: 15

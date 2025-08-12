@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class LoseConsequence : ConsequenceData
 {
+    public bool byWrongStreet = true;
     public override void Execute()
     {
-        EventManager.Instance.OnLost();
+        EventManager.Instance.OnLost(byWrongStreet);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +17,14 @@ public class LoseMenuController : MonoBehaviour, IMenuController
     public float textFadeDuration = 1f;
     public float buttonsFadeDuration = 1f;
 
+    [SerializeField] private TMP_Text _text;
     private Coroutine fadeRoutine;
 
     public void OnEnableMenu()
     {
         gameObject.SetActive(true);
 
+        _text.text = CanvasManager.Instance.LoseText;
         imagesGroup.alpha = 0f;
         textGroup.alpha = 0f;
         buttonsGroup.alpha = 0f;

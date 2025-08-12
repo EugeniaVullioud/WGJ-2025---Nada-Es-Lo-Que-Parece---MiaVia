@@ -81,6 +81,14 @@ public struct SetNextDecision : IEventDataSetter<DecisionData>
 
     public void Set(DecisionData next) => this.NextDecision = next;
 }
+public struct QueueNextDecision : IEventDataSetter<DecisionData>
+{
+    public DecisionData NextDecision;
+
+    public QueueNextDecision(DecisionData next) => this.NextDecision = next;
+
+    public void Set(DecisionData next) => this.NextDecision = next;
+}
 public struct OnCorrectlyAnswered : IEventDataSetter<bool>
 {
     public bool WasCorrect;
@@ -93,6 +101,7 @@ public struct OnCorrectlyAnswered : IEventDataSetter<bool>
 public struct TriggerNextDecision { }
 public struct SpawnNextDecision { }
 public struct FinishDecisionMaking { }
+public struct CheckPendingSpawn { }
 #endregion
 
 
@@ -113,7 +122,13 @@ public struct MenuChosen : IEventDataSetter<MenuType>
 public struct ExitGame{ }
 
 [System.Serializable]
-public struct LostGame { }
+public struct LostGame:  IEventDataSetter<bool>
+{
+    public bool byWrongStreet;
+    public LostGame(bool ready) => this.byWrongStreet = ready;
+
+    public void Set(bool ready) => this.byWrongStreet = ready;
+}
 
 [System.Serializable]
 public struct ResetGame { }

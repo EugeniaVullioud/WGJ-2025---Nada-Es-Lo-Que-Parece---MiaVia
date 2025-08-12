@@ -20,10 +20,14 @@ public class CanvasManager : MonoBehaviour
 
     private Dictionary<MenuType, IMenuController> menuMap;
 
+    public static CanvasManager Instance { get; private set; }
     private void Awake()
     {
-        // Initialize dictionary mapping MenuType to controller
-        menuMap = new Dictionary<MenuType, IMenuController>
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+
+            // Initialize dictionary mapping MenuType to controller
+            menuMap = new Dictionary<MenuType, IMenuController>
         {
             { MenuType.MainMenu, mainMenu },
             { MenuType.CreditsMenu, creditsMenu },
@@ -41,6 +45,8 @@ public class CanvasManager : MonoBehaviour
         //ShowMenu(MenuType.MainMenu);
 
     }
+
+    public string LoseText = "TE MORISTE DE LA VERGUENZA";
     private void Start()
     {
         EventBus.Subscribe<MenuChosen>((menu) => ShowMenu(menu.Menu));
@@ -48,7 +54,16 @@ public class CanvasManager : MonoBehaviour
         EventBus.Subscribe<EnterDecisionMakingState>((menu) => ShowMenu(MenuType.DecisionMenu));
         EventBus.Subscribe<FinishDecisionMaking>((menu) => ShowMenu(MenuType.InGameMenu));
         EventBus.Subscribe<WonGame>((menu) => ShowMenu(MenuType.EndingMenu));
-        EventBus.Subscribe<LostGame>((menu) => ShowMenu(MenuType.LoseMenu));
+        EventBus.Subscribe<LostGame>((menu) =>  { if (menu.byWrongStreet) 
+            {
+                LoseText = "TE PERDISTE";
+            }
+            else 
+            {
+                LoseText = "TE MORISTE DE LA VERGUENZA";
+            }
+            Debug.Log(LoseText);
+            ShowMenu(MenuType.LoseMenu); });
 
         EventManager.Instance.OnMainMenuChosen();
     }

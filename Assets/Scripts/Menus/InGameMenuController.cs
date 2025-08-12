@@ -16,9 +16,9 @@ public class InGameMenuController : MonoBehaviour, IMenuController
     {
         gameObject.SetActive(true);
 
+        return;
         // Set all sliders invisible initially
-        foreach (var cg in sliderGroups)
-            cg.alpha = 0f;
+        foreach (var cg in sliderGroups)   cg.alpha = 0f;
 
         fadeRoutine = StartCoroutine(FadeSlidersSequentially());
     }

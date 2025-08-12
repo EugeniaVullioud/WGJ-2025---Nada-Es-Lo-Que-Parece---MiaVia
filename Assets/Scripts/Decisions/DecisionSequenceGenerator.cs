@@ -12,6 +12,12 @@ public class DecisionSequenceGenerator : MonoBehaviour
     private Queue<DecisionData> _currentSequence;
     private int _index;
 
+    public void ResetQueue()
+    {
+        return;
+        _currentSequence.Clear();
+        GenerateSequence();
+    }
     public void GenerateSequence()
     {
         List<DecisionData> sequence = new List<DecisionData>();
@@ -42,7 +48,7 @@ public class DecisionSequenceGenerator : MonoBehaviour
         _currentSequence = new Queue<DecisionData>(sequence);
         _index = 0;
 
-        EventManager.Instance.OnSetNextDecision(GetNextDecision());
+        //EventManager.Instance.OnSetNextDecision(GetNextDecision());
 
     }
 

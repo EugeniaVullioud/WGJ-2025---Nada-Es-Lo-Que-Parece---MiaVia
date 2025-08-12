@@ -23,11 +23,18 @@ public class DecisionTrigger : MonoBehaviour
         // Check if the other object's layer is in the triggeringLayers mask
         if (((1 << other.gameObject.layer) & triggeringLayers) != 0)
         {
+            
             hasTriggered = true;
             //DecisionService.Instance.StartDecision(decisionToTrigger);
 
-            Debug.Log("CHE ESTA");
-            EventManager.Instance.OnEnterDecisionMaking();
+            Debug.Log("In trigger area will queue " + decisionToTrigger);
+
+            DecisionController.InEventQueue++;
+                
+            
+            //EventManager.Instance.OnEnterDecisionMaking();
+            
+           
         }
     }
 

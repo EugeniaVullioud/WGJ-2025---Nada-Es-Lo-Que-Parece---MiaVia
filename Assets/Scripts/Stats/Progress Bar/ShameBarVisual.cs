@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class ShameBarVisual : MonoBehaviour
 {
@@ -16,8 +18,6 @@ public class ShameBarVisual : MonoBehaviour
 
     private float _currentFill = 0f; // 0 to 1
     private float _lastCheck = -1f;
-
-    public float CurrentFill => _currentFill;
 
     private void UpdateFill(float value)
     {
@@ -45,10 +45,32 @@ public class ShameBarVisual : MonoBehaviour
         _shameStatHandler = new ProgressBarStatHandler(shameStat, _shameSlider);
         _shameStatHandler.UpdateProgressBars();
 
-        EventBus.Subscribe<ModifyShameStat>((stat) =>Modify(stat.Amount));
+        EventBus.Subscribe<ModifyShameStat>((stat) => Modify(stat.Amount));
+        EventBus.Subscribe<PlayAgain>((stat) => { _shameStatHandler.ResetStats(); UpdateFill(0); });
+        EventBus.Subscribe<WonGame>((stat) => {
+            _shameStatHandler.ResetStats(); UpdateFill(0);
+            StopAllCoroutines();
+        });
+        EventBus.Subscribe<LostGame>((stat) => {
+            _shameStatHandler.ResetStats(); UpdateFill(0);
+            StopAllCoroutines();
+        });
 
     }
 
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<ModifyShameStat>((stat) => Modify(stat.Amount));
+        EventBus.Unsubscribe<PlayAgain>((stat) => { _shameStatHandler.ResetStats(); UpdateFill(0); });
+        EventBus.Unsubscribe<WonGame>((stat) => {
+            _shameStatHandler.ResetStats(); UpdateFill(0);
+            StopAllCoroutines();
+        });
+        EventBus.Unsubscribe<LostGame>((stat) => {
+            _shameStatHandler.ResetStats(); UpdateFill(0);
+            StopAllCoroutines();
+        });
+    }
     void Modify(float amount)
     {
         _shameStatHandler.ModifyStat(amount);
@@ -115,5 +137,8 @@ public class ShameBarVisual : MonoBehaviour
             EventManager.Instance.OnModifyShameStat(-5);
 
         }
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            EventManager.Instance.OnEndingMenuChosen();
+
     }
 }

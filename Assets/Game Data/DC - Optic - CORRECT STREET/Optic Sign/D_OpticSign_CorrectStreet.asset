@@ -10,27 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1da31ca557526b4cbbc66f595a12225, type: 3}
-  m_Name: D_OpticSign_CorrectStreet 1
+  m_Name: D_OpticSign_CorrectStreet
   m_EditorClassIdentifier: 
-  decisionId: OpticINC
+  decisionId: OpticC
   prompt: "\xBFSer\xE1 la calle de la \xF3ptica?\r"
   timeLimitSeconds: 5
   choices:
   - choiceText: Si, genial!
     consequences:
-    - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
-    - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
-    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
-  - choiceText: No, es la siguiente
-    consequences:
     - {fileID: 11400000, guid: 42e6746a901677849b575411ed24600b, type: 2}
     - {fileID: 11400000, guid: 65fe0bd0aa0a79142b847123c4493898, type: 2}
     - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
-  defaultChoice:
-    choiceText: Si, genial!
+  - choiceText: No, es la siguiente
     consequences:
     - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
     - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
     - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
-  onZoom: {fileID: 0}
-  prefab: {fileID: 0}
+  defaultChoice:
+    choiceText: No, es la siguiente
+    consequences:
+    - {fileID: 11400000, guid: a319ddc959fcf1e4f95469aeedea439c, type: 2}
+    - {fileID: 11400000, guid: c0ed84e02f0d5c64aa93106bd70935cc, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 4997601357342850790, guid: d509092968c0a2047b376a29ec98a950, type: 3}
+  compare: {fileID: 0}
+  prefab: {fileID: 4119534928823729421, guid: b922e47a35d89154098577a5b5e3a4ee, type: 3}

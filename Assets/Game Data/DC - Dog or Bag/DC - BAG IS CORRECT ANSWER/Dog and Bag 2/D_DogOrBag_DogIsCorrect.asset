@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1da31ca557526b4cbbc66f595a12225, type: 3}
+  m_Name: D_DogOrBag_DogIsCorrect
+  m_EditorClassIdentifier: 
+  decisionId: PERROCORRECTA
+  prompt: "Eso que se mueve \xBFqu\xE9 es? Es un perro o una bolsa?\r\n"
+  timeLimitSeconds: 5
+  choices:
+  - choiceText: ACARICIAR
+    consequences:
+    - {fileID: 11400000, guid: 933c0f9b4474c8e4999812e622bbcc8e, type: 2}
+    - {fileID: 11400000, guid: 645a2f7760daa6949a4b949dc528a44c, type: 2}
+    - {fileID: 11400000, guid: 8b007c681e059974293b7559b09476e5, type: 2}
+    - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
+  - choiceText: ESQUIVAR
+    consequences:
+    - {fileID: 11400000, guid: a391656e0beca1f4d9a72ce509f0e568, type: 2}
+    - {fileID: 11400000, guid: 2a0df475e2ac03444950ce1236376c3d, type: 2}
+    - {fileID: 11400000, guid: 933c0f9b4474c8e4999812e622bbcc8e, type: 2}
+    - {fileID: 11400000, guid: a1ea667c495c66b4fb866fe68629e846, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  defaultChoice:
+    choiceText: ESQUIVAR
+    consequences:
+    - {fileID: 11400000, guid: a391656e0beca1f4d9a72ce509f0e568, type: 2}
+    - {fileID: 11400000, guid: 2a0df475e2ac03444950ce1236376c3d, type: 2}
+    - {fileID: 11400000, guid: 933c0f9b4474c8e4999812e622bbcc8e, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 5413358790496707003, guid: 21516d6ea5a322044a075c83b111ebd5, type: 3}
+  prefab: {fileID: 4319704477994213488, guid: 104be7b2fd6e96240ad320aee2ae4171, type: 3}

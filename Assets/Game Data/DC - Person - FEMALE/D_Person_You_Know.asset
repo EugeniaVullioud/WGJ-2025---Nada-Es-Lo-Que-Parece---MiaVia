@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: D_Person_You_Know
   m_EditorClassIdentifier: 
   decisionId: DESC
-  prompt: "\xBFAlguien me est\xE1 saludando? Se parece a mi tia Cata Rata\r\n"
+  prompt: "Esa persona se ve conocida....\xBFEs mi amiga Astrid Martina?\r\n"
   timeLimitSeconds: 5
   choices:
   - choiceText: SALUDAR
@@ -35,5 +35,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
     - {fileID: 11400000, guid: c46e77ef0bea13a4aa2c56cd8c0282d0, type: 2}
     - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
-  onZoom: {fileID: 0}
-  prefab: {fileID: 0}
+  onZoom: {fileID: 9205755001160277851, guid: df9bed75b59522d4ebf16dbf0478e219, type: 3}
+  compare: {fileID: 1076359299436828797, guid: 476620041ce131447a69a7a17d144b76, type: 3}
+  prefab: {fileID: 6661956816398904289, guid: 00597c67abb65874d890b50848be99ea, type: 3}

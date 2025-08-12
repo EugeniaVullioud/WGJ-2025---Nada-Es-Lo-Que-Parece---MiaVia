@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1da31ca557526b4cbbc66f595a12225, type: 3}
+  m_Name: D_Person_You_Know 1
+  m_EditorClassIdentifier: 
+  decisionId: DESCTIA
+  prompt: "\xBFAlguien me est\xE1 saludando? Se parece a mi tia Cata Rata\r\n"
+  timeLimitSeconds: 5
+  choices:
+  - choiceText: SALUDAR
+    consequences:
+    - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
+    - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
+    - {fileID: 11400000, guid: c46e77ef0bea13a4aa2c56cd8c0282d0, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  - choiceText: IGNORAR
+    consequences:
+    - {fileID: 11400000, guid: 6d95806b441d30f42b1ffe5aa4036062, type: 2}
+    - {fileID: 11400000, guid: 7647f6b200084924ab44263331045d1e, type: 2}
+    - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
+    - {fileID: 11400000, guid: fdf15db5c18c0a24ebc04b418355aba6, type: 2}
+  defaultChoice:
+    choiceText: SALUDAR
+    consequences:
+    - {fileID: 11400000, guid: bde40031405b9254493d270c50463782, type: 2}
+    - {fileID: 11400000, guid: 64f27da283f362d41bd3ec0e175d95fd, type: 2}
+    - {fileID: 11400000, guid: c46e77ef0bea13a4aa2c56cd8c0282d0, type: 2}
+    - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
+  onZoom: {fileID: 337457571283730430, guid: 624066fa321417d40948b5d9bfdd4030, type: 3}
+  compare: {fileID: 2002091412590021148, guid: dd66be7e64c80fb48a211c1d8876f797, type: 3}
+  prefab: {fileID: 1585190235321193031, guid: cd0b22ce514b4864f8a91aa3ba7fa023, type: 3}

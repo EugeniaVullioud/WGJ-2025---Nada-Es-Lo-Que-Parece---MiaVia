@@ -30,16 +30,16 @@ public class GameStatHandler : MonoBehaviour
 
         // Create the ProgressBarStatHandler and initialize it with stats and sliders
         _shameStatHandler = new ProgressBarStatHandler(shameStat, _shameSlider);
-        //_distanceStatHandler = new ProgressBarStatHandler(distanceStat, _decisionsSlider);
-        //_decisionsStatHandler = new ProgressBarStatHandler(decisionsStat, _distanceSlider);
+        _distanceStatHandler = new ProgressBarStatHandler(distanceStat, _decisionsSlider);
+        _decisionsStatHandler = new ProgressBarStatHandler(decisionsStat, _distanceSlider);
         
         _shameStatHandler.UpdateProgressBars();
-        //_distanceStatHandler.UpdateProgressBars();
-        //_decisionsStatHandler.UpdateProgressBars();
+        _distanceStatHandler.UpdateProgressBars();
+        _decisionsStatHandler.UpdateProgressBars();
 
         //EventBus.Subscribe<ModifyShameStat>((stat)=> _shameStatHandler.ModifyStat(stat.Amount));
-        EventBus.Subscribe<ModifyDecisionTimeStat>((stat)=> _decisionsStatHandler.ModifyStat(stat.Amount));
-        EventBus.Subscribe<ModifyDistanceTimeStat>((stat)=> _distanceStatHandler.ModifyStat(stat.Amount));
+        //EventBus.Subscribe<ModifyDecisionTimeStat>((stat)=> _decisionsStatHandler.ModifyStat(stat.Amount));
+        //EventBus.Subscribe<ModifyDistanceTimeStat>((stat)=> _distanceStatHandler.ModifyStat(stat.Amount));
 
     }
 

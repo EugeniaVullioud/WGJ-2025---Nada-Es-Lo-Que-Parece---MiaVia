@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Game/Decision")]
 public class DecisionData : ScriptableObject
@@ -19,4 +20,12 @@ public class DecisionData : ScriptableObject
     [Tooltip("If none chosen")]
     public ChoiceOption defaultChoice;
 
+    [Tooltip("Will Pop up on the middle of the screen")]
+    public GameObject onZoom;
+
+    [Tooltip("Comparison")]
+    public Image compare;
+
+    [Tooltip("Prefab")]
+    public MovingFadingObject prefab;
 }

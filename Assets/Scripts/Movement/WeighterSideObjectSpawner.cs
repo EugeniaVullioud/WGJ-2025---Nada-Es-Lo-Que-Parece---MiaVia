@@ -11,6 +11,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     {
         public MovingFadingObject prefab;
         public bool isFunctional;
+        public string id;
     }
 
     [Header("Prefabs")]
@@ -45,8 +46,6 @@ public class WeighterSideObjectSpawner : MonoBehaviour
 
     private List<Coroutine> _spawnCoroutines = new();
 
-    private int _functionalIndex = 0;
-
     private Dictionary<int, float> _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } };
     private Dictionary<int, float> _lastDecorativeSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } };
 
@@ -62,45 +61,47 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     }
     private void Start()
     {
-
+        
         foreach (var sp in spawnablePrefabs)
         {
             var pool = new ComponentPool<MovingFadingObject>(sp.prefab, poolSizePerPrefab, transform);
             _pools[sp.prefab] = pool;
         }
-        foreach (var sp in spawnableFunctionalPrefabs)
-        {
-            var pool = new ComponentPool<MovingFadingObject>(sp.prefab, poolSizePerPrefab, transform);
-            _pools[sp.prefab] = pool;
-        }
+       
         StartSpawning();
     }
-
-
+    public void SetPrefabs(List<DecisionData> sequence)
+    {
+        spawnableFunctionalPrefabs = new List<SpawnablePrefab>();
+        foreach (var dec in sequence)
+        {
+            var c = new SpawnablePrefab() { prefab = dec.prefab, isFunctional =true, id = dec.decisionId };
+            spawnableFunctionalPrefabs.Add(c);
+            // Ensure the prefab is added to the pool
+            if (!_pools.ContainsKey(c.prefab))
+            {
+                var pool = new ComponentPool<MovingFadingObject>(c.prefab, poolSizePerPrefab, transform);
+                _pools[c.prefab] = pool;
+            }
+        }
+    }
+   
     /// <summary>
     /// Triggers the next functional prefab in sequence to be spawned.
     /// </summary>
     public void TriggerFunctionalSpawn()
     {
-        if (spawnableFunctionalPrefabs.Count == 0)
+
+        if (spawnableFunctionalPrefabs == null || spawnableFunctionalPrefabs.Count <= 0) return;
+
+        if (next == null)
         {
-            Debug.LogWarning("No functional prefabs assigned.");
+            Debug.Log("No functional prefabs assigned.");
             return;
         }
+        _functionalQueue.Enqueue(new SpawnablePrefab() { prefab = next.prefab, isFunctional = true, id = next.decisionId });
+      
 
-        var prefab = spawnableFunctionalPrefabs[_functionalIndex];
-        _functionalQueue.Enqueue(prefab);
-
-        // Advance index cyclically
-        _functionalIndex = (_functionalIndex + 1) % spawnableFunctionalPrefabs.Count;
-    }
-
-    /// <summary>
-    /// Resets the functional prefab index back to 0.
-    /// </summary>
-    public void ResetFunctionalIndex()
-    {
-        _functionalIndex = 0;
     }
 
     private IEnumerator DecorativeLoop(int laneSide)
@@ -239,6 +240,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 Debug.Log($"Can left: {canSpawnLeft} Can right: {canSpawnRight}");
                 */
 
+
                 float now = Time.time;
                 bool canSpawnLeft = (now - _lastFunctionalSpawnTime[-1]) >= functionalMinTimeSpacing;
                 bool canSpawnRight = (now - _lastFunctionalSpawnTime[1]) >= functionalMinTimeSpacing;
@@ -252,6 +254,9 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 if (canSpawnLeft)
                 {
                     var prefab = _functionalQueue.Dequeue();
+
+                    Debug.Log("FunctionalLoop " + prefab.id);
+
                     SpawnFromPrefab(prefab, -1);
                     _lastFunctionalSpawnTime[-1] = now;
                     _laneBlockUntil[-1] = now + functionalLaneBlockTime;
@@ -259,6 +264,8 @@ public class WeighterSideObjectSpawner : MonoBehaviour
                 else if (canSpawnRight)
                 {
                     var prefab = _functionalQueue.Dequeue();
+                    Debug.Log("FunctionalLoop " + prefab.id);
+
                     SpawnFromPrefab(prefab, 1);
                     _lastFunctionalSpawnTime[1] = now;
                     _laneBlockUntil[1] = now + functionalLaneBlockTime;
@@ -334,6 +341,8 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     }
     public void ResumeFunctionalLoop()
     {
+        Debug.Log("resume spawning");
+
         if (_functionalCoroutine == null)
         {
             _functionalCoroutine = StartCoroutine(FunctionalLoop());
@@ -352,13 +361,19 @@ public class WeighterSideObjectSpawner : MonoBehaviour
         StartSpawning();
         ResumeFunctionalLoop();
     }
+    DecisionData next;
+    void StoreNext(DecisionData data)
+    {
+        next = data;
+    }
     private void OnEnable()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
         EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); });
         EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); });
         EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); });
-        if (spawnableFunctionalPrefabs!= null && spawnableFunctionalPrefabs.Count>0) EventBus.Subscribe<TriggerNextDecision>((e) => { TriggerFunctionalSpawn(); });
+        EventBus.Subscribe<SetNextDecision>((e) => { StoreNext(e.NextDecision); });
+        EventBus.Subscribe<SpawnNextDecision>((e) => { TriggerFunctionalSpawn(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
     }
    
@@ -366,10 +381,12 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     {
         EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { PauseSpawning(); });
         EventBus.Unsubscribe<FinishDecisionMaking>((e) => { ResumeSpawning(); });
-        if (spawnableFunctionalPrefabs != null && spawnableFunctionalPrefabs.Count > 0) EventBus.Unsubscribe<TriggerNextDecision>((e) => { TriggerFunctionalSpawn(); });
+       EventBus.Unsubscribe<SpawnNextDecision>((e) => { TriggerFunctionalSpawn(); });
         EventBus.Unsubscribe<LostGame>((e) => { PauseSpawning(); });
         EventBus.Unsubscribe<WonGame>((e) => { PauseSpawning(); });
         EventBus.Unsubscribe<PlayAgain>((e) => { ResumeSpawning(); });
+        EventBus.Unsubscribe<SetNextDecision>((e) => { StoreNext(e.NextDecision); });
+
     }
 
 }

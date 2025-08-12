@@ -25,6 +25,8 @@ public class DecisionTrigger : MonoBehaviour
         {
             hasTriggered = true;
             //DecisionService.Instance.StartDecision(decisionToTrigger);
+
+            Debug.Log("CHE ESTA");
             EventManager.Instance.OnEnterDecisionMaking();
         }
     }

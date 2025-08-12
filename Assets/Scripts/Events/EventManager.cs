@@ -68,7 +68,9 @@ public class EventManager : MonoBehaviour
     #region Decisions
     public void OnSetNextDecision(DecisionData amount)
         => GenerateEvent<SetNextDecision>((ref SetNextDecision e) => e.Set(amount));
-    
+
+    public void OnSpawnNextDecision()
+       => GenerateEvent<SpawnNextDecision>((ref SpawnNextDecision e) => { });
     public void OnTriggerNextDecision()
         => GenerateEvent<TriggerNextDecision>((ref TriggerNextDecision e) => { });
 
@@ -127,7 +129,7 @@ public class EventManager : MonoBehaviour
         => GenerateEvent<PlayAgain>((ref PlayAgain e) => { });
 
     public void OnLost()
-        => GenerateEvent<MenuChosen>((ref MenuChosen e) => e.Set(MenuType.LoseMenu));
+        => GenerateEvent<LostGame>((ref LostGame e)  => { });
     #endregion
 
 

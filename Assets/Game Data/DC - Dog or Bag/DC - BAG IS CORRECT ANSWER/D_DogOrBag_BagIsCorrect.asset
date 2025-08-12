@@ -35,5 +35,5 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d6f9e003a9b87444fb6c512cd3367fb6, type: 2}
     - {fileID: 11400000, guid: ff34862ae525fac419ef68dd736454e5, type: 2}
     - {fileID: 11400000, guid: 4a1f48f600af81c4aa5ba569d223f88f, type: 2}
-  onZoom: {fileID: 0}
-  prefab: {fileID: 0}
+  onZoom: {fileID: 3288061584624765323, guid: 56424928dcf5f4b438df8f9bd5251246, type: 3}
+  prefab: {fileID: 2959375735969258266, guid: 22a241d28251e2e48b32dff7c9770c33, type: 3}

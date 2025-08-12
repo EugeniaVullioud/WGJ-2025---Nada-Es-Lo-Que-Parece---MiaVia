@@ -91,6 +91,7 @@ public struct OnCorrectlyAnswered : IEventDataSetter<bool>
 }
 [System.Serializable]
 public struct TriggerNextDecision { }
+public struct SpawnNextDecision { }
 public struct FinishDecisionMaking { }
 #endregion
 

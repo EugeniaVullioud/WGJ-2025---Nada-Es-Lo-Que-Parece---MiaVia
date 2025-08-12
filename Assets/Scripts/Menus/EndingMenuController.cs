@@ -7,6 +7,8 @@ public class EndingMenuController : FadeInMenuBase
     [Header("UI Elements")]
     public CanvasGroup buttonsGroup;
     public VideoPlayer videoPlayer;
+    public string videoFileName;
+    public float vidLenght = 25f;
 
     private Coroutine videoRoutine;
 
@@ -28,6 +30,18 @@ public class EndingMenuController : FadeInMenuBase
         if (videoRoutine != null)  StopCoroutine(videoRoutine);
         videoRoutine = StartCoroutine(PlayVideoAndWaitRoutine());
     }
+    private void Awake()
+    {
+        SetUp();
+    }
+    public void SetUp()
+    {
+        if (videoPlayer)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
+            videoPlayer.url = videoPath;
+        }
+    }
 
     public override void OnDisableMenu()
     {
@@ -43,8 +57,7 @@ public class EndingMenuController : FadeInMenuBase
         videoPlayer.Play();
         // Wait for video to finish
 
-        float l = (float)videoPlayer.length;
-        yield return new WaitForSeconds(l);
+        yield return new WaitForSeconds(vidLenght);
 
         buttonsGroup.gameObject.SetActive(true);
 

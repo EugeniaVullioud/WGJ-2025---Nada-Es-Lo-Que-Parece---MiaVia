@@ -11,17 +11,32 @@ public class VideoMenuController : MonoBehaviour, IMenuController
     public VideoPlayer videoPlayer;
     public CanvasGroup loadingTextGroup;
     public Button startButton;
+    public string videoFileName;
 
     public float minLoadingTime = 2f;
+    public float vidLenght = 25f;
 
     private Coroutine videoRoutine;
     private bool _readyToPlay = false;
+
+    private void Awake()
+    {
+        SetUp();
+    }
     private void Start()
     {
         EventBus.Subscribe<VisualsReady>((ready) => { _readyToPlay = ready.Ready; });
 
         startButton.onClick.AddListener(() => { videoPlayer.Stop(); StopCoroutine(videoRoutine); });
 
+    }
+    public void SetUp()
+    {
+        if (videoPlayer)
+        {
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
+            videoPlayer.url = videoPath;
+        }
     }
     public void OnEnableMenu()
     {
@@ -54,14 +69,13 @@ public class VideoMenuController : MonoBehaviour, IMenuController
         videoPlayer.Play();
         // Wait for video to finish
 
-        float l = (float)videoPlayer.length;
         yield return new WaitForSeconds(minLoadingTime);
 
 
         startButton.gameObject.SetActive(true);
         startButton.interactable = true;
 
-        yield return new WaitForSeconds(l- minLoadingTime -0.5f);
+        yield return new WaitForSeconds(vidLenght - minLoadingTime -0.5f);
 
         startButton.onClick.Invoke();
     }

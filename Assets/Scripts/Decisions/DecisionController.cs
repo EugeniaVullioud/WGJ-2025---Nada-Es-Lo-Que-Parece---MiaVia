@@ -51,6 +51,8 @@ public class DecisionController : MonoBehaviour
         //SetNextDecision(_firstDecision);
 
         //EventBus.Subscribe<ExitDecisionMakingState>();
+
+        comparison.sprite = null;
     }
     private void Start()
     {

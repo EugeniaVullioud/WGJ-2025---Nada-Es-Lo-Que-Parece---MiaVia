@@ -12357,6 +12357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1556743148}
   - component: {fileID: 1556743147}
+  - component: {fileID: 1556743149}
   m_Layer: 0
   m_Name: Decoration and Item Spawner
   m_TagString: Untagged
@@ -12371,7 +12372,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1556743146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5877d8dc7d9e1e64db681ae0066eefae, type: 3}
   m_Name: 
@@ -12419,6 +12420,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1387986621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1556743149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556743146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82638471e1f161a4097b3eb6c3c2d67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 3745045935822022651, guid: 9e8e380845452484a9f02fbb092b713b, type: 3}
+  - {fileID: 5569477348583227876, guid: d44dc75c254a514439c59627a63b3ff6, type: 3}
+  - {fileID: 7518716724574528753, guid: b0082db9070c2724083c0ab682004c96, type: 3}
+  poolSize: 10
+  spawnInterval: 2
+  spawnDistance: 620
+  exitDistance: -5
+  fixedSpeed: 60
+  heightOffsetX: 30
+  tiltAngle: -40
+  tiltAnglex: 90
+  tiltAngley: 180
+  startDistanceFromCenter: 7
+  endDistanceFromCenter: 50
+  growthScale: 1.5
+  growthStartPercent: 0.7
 --- !u!1 &1558790562
 GameObject:
   m_ObjectHideFlags: 0

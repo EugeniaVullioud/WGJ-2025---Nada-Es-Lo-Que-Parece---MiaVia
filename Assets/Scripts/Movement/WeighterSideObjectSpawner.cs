@@ -317,7 +317,7 @@ public class WeighterSideObjectSpawner : MonoBehaviour
         float travelTime = Vector3.Distance(startPos, endPos) / fixedSpeed;
 
         var obj = _pools[chosen.prefab].Get();
-        obj.InitMovement(startPos, endPos, travelTime, o => ReturnToPool(chosen.prefab, o), growthScale, growthStartPercent);
+        obj.InitMovement(startPos, endPos, travelTime, o => ReturnToPool(chosen.prefab, o), growthScale, growthStartPercent, paused);
 
         // Apply tilt
         float appliedTilt = laneSide > 0 ? -tiltAngle : tiltAngle;
@@ -384,91 +384,19 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     private void OnEnable()
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { nextWhenPaused = next; paused = true; });
-        EventBus.Subscribe<CheckPendingSpawn>((e) =>
-        {
-            return;
-            if (next!=null && nextWhenPaused.decisionId != null)
-            {
-                var q = new SpawnablePrefab() { prefab = next.prefab, isFunctional = true, id = next.decisionId };
-
-
-                float now = Time.time;
-                bool canSpawnLeft = (now - _lastFunctionalSpawnTime[-1]) >= functionalMinTimeSpacing;
-                bool canSpawnRight = (now - _lastFunctionalSpawnTime[1]) >= functionalMinTimeSpacing;
-
-                if (!canSpawnLeft && !canSpawnRight && spawnablePrefabs.Count == 0)
-                {
-                    var randdom = Random.Range(0, 2);
-                    if (randdom == 0) canSpawnLeft = true;
-                    else canSpawnRight = true;
-                }
-                if (canSpawnLeft)
-                {
-                    var prefab = q;
-
-                    Debug.Log("QUEUED FunctionalLoop " + prefab.id);
-                    queued = false;
-                    nextWhenPaused = null;
-                    SpawnFromPrefab(prefab, -1);
-                    _lastFunctionalSpawnTime[-1] = now;
-                    _laneBlockUntil[-1] = now + functionalLaneBlockTime;
-                }
-                else if (canSpawnRight)
-                {
-                    var prefab = q;
-                    Debug.Log("QUEUED FunctionalLoop " + prefab.id);
-                    nextWhenPaused = null;
-                    queued = false;
-                    SpawnFromPrefab(prefab, 1);
-                    _lastFunctionalSpawnTime[1] = now;
-                    _laneBlockUntil[1] = now + functionalLaneBlockTime;
-                }
-            }
-        });
+       
         EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
         EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
         EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
         EventBus.Subscribe<QueueNextDecision>((e) => { StoreNext(e.NextDecision); });
-        EventBus.Subscribe<SpawnNextDecision>((e) => { TriggerFunctionalSpawn(); });
+        EventBus.Subscribe<SpawnNextDecision>((e) => {TriggerFunctionalSpawn(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { paused = false; });
     }
    
     private void OnDisable()
     {
         EventBus.Unsubscribe<EnterDecisionMakingState>((e) => { nextWhenPaused = next; paused = true; });
-        EventBus.Unsubscribe<CheckPendingSpawn>((e) =>
-        {
-            if (next != null && nextWhenPaused.decisionId != next.decisionId)
-            {
-                float now = Time.time;
-                bool canSpawnLeft = (now - _lastFunctionalSpawnTime[-1]) >= functionalMinTimeSpacing;
-                bool canSpawnRight = (now - _lastFunctionalSpawnTime[1]) >= functionalMinTimeSpacing;
-
-                if (!canSpawnLeft && !canSpawnRight && spawnablePrefabs.Count == 0)
-                {
-                    var randdom = Random.Range(0, 2);
-                    if (randdom == 0) canSpawnLeft = true;
-                    else canSpawnRight = true;
-                }
-                if (canSpawnLeft)
-                {
-                    var prefab = _functionalQueue.Dequeue();
-
-                    queued = false;
-                    SpawnFromPrefab(prefab, -1);
-                    _lastFunctionalSpawnTime[-1] = now;
-                    _laneBlockUntil[-1] = now + functionalLaneBlockTime;
-                }
-                else if (canSpawnRight)
-                {
-                    var prefab = _functionalQueue.Dequeue();
-                    queued = false;
-                    SpawnFromPrefab(prefab, 1);
-                    _lastFunctionalSpawnTime[1] = now;
-                    _laneBlockUntil[1] = now + functionalLaneBlockTime;
-                }
-            }
-        });
+       
 
         EventBus.Unsubscribe<FinishDecisionMaking>((e) => { paused = false; });
        EventBus.Unsubscribe<SpawnNextDecision>((e) => { TriggerFunctionalSpawn(); });

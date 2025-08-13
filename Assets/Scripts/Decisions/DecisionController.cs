@@ -53,6 +53,7 @@ public class DecisionController : MonoBehaviour
         //EventBus.Subscribe<ExitDecisionMakingState>();
 
         comparison.sprite = null;
+        comparison.gameObject.SetActive(false);
     }
     private void Start()
     {
@@ -145,6 +146,8 @@ public class DecisionController : MonoBehaviour
 
             comparison.sprite = decision.compare.sprite;
         }
+        else comparison.gameObject.SetActive(false);
+
         UpdateUIText(currentDecision.prompt);
 
         UpdateButtonText(_button1Text, currentDecision.choices[0].choiceText);

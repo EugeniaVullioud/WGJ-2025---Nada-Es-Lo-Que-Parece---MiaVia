@@ -32,6 +32,10 @@ public class MovingFadingObject : MonoBehaviour
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
+
+        // Create a unique instance of the material
+        _renderer.material = new Material(_renderer.material);
+
         _startColor = _renderer.material.color;
     }
     private void OnEnable()
@@ -52,7 +56,7 @@ public class MovingFadingObject : MonoBehaviour
         EventBus.Unsubscribe<WonGame>((e) => { HandlePause(); });
     }
     public void InitMovement(Vector3 startPos, Vector3 endPos, float travelTime, System.Action<MovingFadingObject> onFinished, float maxScaleMultiplier = 1f,
-                             float growthStartPercent = 0.7f)
+                             float growthStartPercent = 0.7f, bool paused = false)
     {
         _startPos = startPos;
         _endPos = endPos;
@@ -62,7 +66,7 @@ public class MovingFadingObject : MonoBehaviour
 
         _isActive = true;
         _isMoving = true;
-        _isPaused = false;
+        _isPaused = paused;
         gameObject.SetActive(true);
 
         _initialScale = transform.localScale;
@@ -71,6 +75,12 @@ public class MovingFadingObject : MonoBehaviour
         _growthStartPercent = growthStartPercent;
         transform.position = _startPos;
         transform.localScale = _initialScale;
+
+
+        // Reset alpha
+        Color reset = _startColor;
+        reset.a = 0f;
+        _renderer.material.color = reset;
     }
 
     private void Update()
@@ -123,6 +133,10 @@ public class MovingFadingObject : MonoBehaviour
         transform.localScale = _initialScale;
         _isMoving = false;
         _isPaused = false;
+
+        Color resetColor = _startColor;
+        resetColor.a = _startColor.a;
+        _renderer.material.color = resetColor;
     }
 
     private void HandlePause() => _isPaused = true;

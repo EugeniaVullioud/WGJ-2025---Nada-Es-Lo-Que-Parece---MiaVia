@@ -385,9 +385,9 @@ public class WeighterSideObjectSpawner : MonoBehaviour
     {
         EventBus.Subscribe<EnterDecisionMakingState>((e) => { nextWhenPaused = next; paused = true; });
        
-        EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
-        EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
-        EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); queued = false; _functionalQueue.Clear(); next = null; _lastFunctionalSpawnTime = new Dictionary<int, float> { { -1, 0f }, { 1, 0f } }; });
+        EventBus.Subscribe<LostGame>((e) => { PauseSpawning(); queued = false;  });
+        EventBus.Subscribe<WonGame>((e) => { PauseSpawning(); queued = false;  });
+        EventBus.Subscribe<PlayAgain>((e) => { ResumeSpawning(); queued = false; });
         EventBus.Subscribe<QueueNextDecision>((e) => { StoreNext(e.NextDecision); });
         EventBus.Subscribe<SpawnNextDecision>((e) => {TriggerFunctionalSpawn(); });
         EventBus.Subscribe<FinishDecisionMaking>((e) => { paused = false; });

@@ -62,9 +62,9 @@ public class DecisionController : MonoBehaviour
         EventBus.Subscribe<TriggerNextDecision>((_) => { Continue(); });
         EventBus.Subscribe<SetNextDecision>((e) => { SetNextDecision(e.NextDecision); });
         
-        EventBus.Subscribe<PlayAgain>((e) => { ResetController(); _playerLost = false; _playerWon = false; inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
-        EventBus.Subscribe<LostGame>((e) => { OnPlayerLose(); _playerWon = false;  inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
-        EventBus.Subscribe<WonGame>((e) => { _playerWon = true;  inEventMode = false; InEventQueue = 0; _decisionQueue.Clear(); _sequenceGenerator.ResetQueue(); });
+        EventBus.Subscribe<PlayAgain>((e) => { ResetController(); _playerLost = false; _playerWon = false; inEventMode = false;});
+        EventBus.Subscribe<LostGame>((e) => { OnPlayerLose(); _playerWon = false;  inEventMode = false;  });
+        EventBus.Subscribe<WonGame>((e) => { _playerWon = true;  inEventMode = false;  });
         EventBus.Subscribe<OnCorrectlyAnswered>((e) => { if (e.WasCorrect) CorrectlyAnswered(); else IncorrectlyAnswered(); });
 
         _sequenceGenerator.GenerateSequence();

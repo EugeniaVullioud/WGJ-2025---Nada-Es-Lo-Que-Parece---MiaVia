@@ -1216,16 +1216,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   easySettings:
-    start: 200
-    end: 15
+    start: 1450
+    end: 2000
     maxRadius: 0.2
   mediumSettings:
-    start: 75
-    end: 1000
+    start: 1385
+    end: 2000
     maxRadius: 0.5
   hardSettings:
     start: 15
-    end: 1000
+    end: 2000
     maxRadius: 1
   _visualController: {fileID: 1280578941}
 --- !u!1 &143223213
@@ -1982,7 +1982,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &277378293
 RectTransform:
   m_ObjectHideFlags: 0
